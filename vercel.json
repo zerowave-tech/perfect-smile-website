@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/Perfect%20Smile.dc.html" },
+    { "source": "/mobile", "destination": "/Perfect%20Smile%20Mobile.dc.html" }
+  ]
+}
