@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  html { scroll-behavior: smooth; color-scheme: light; }
+  [data-hide-scrollbar]::-webkit-scrollbar { display: none; }
+  html, body { margin: 0; padding: 0; background: #E9E0D1; }
+  body { font-family: "DM Sans", system-ui, sans-serif; color: #1A1613; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #1A1613; text-decoration: none; }
+  a:hover { color: #B98A00; }
+  @keyframes psRise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="width:100%;overflow-x:clip">
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;padding:18px 40px;background:{{ headerBg }};backdrop-filter:blur(6px)">
+  <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:12px;color:#fff">
+    <span style="display:block;width:34px;height:34px;border-radius:9px;background:linear-gradient(160deg,#FFD24A,#F0A800);position:relative;overflow:hidden;box-shadow:0 2px 10px rgba(240,168,0,.35)">
+      <span style="position:absolute;left:14%;right:14%;top:36%;height:34%;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:3px solid #fff"></span>
+    </span>
+    <span style="display:flex;flex-direction:column;line-height:1">
+      <span style="font-family:'Instrument Serif',serif;font-size:22px;letter-spacing:.01em">Perfect Smile</span>
+      <span style="font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.72;margin-top:5px;white-space:nowrap">{{ t.brandSub }}</span>
+    </span>
+  </a>
+  <nav style="display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:12px 22px">
+    <a href="#" onClick="{{ goServices }}" style="color:#fff;font-size:13.5px;letter-spacing:.04em;opacity:.86;border-bottom:1px solid transparent;transition:opacity .2s,border-color .2s,color .2s" style-hover="{opacity:1, color:'#FFD24A', borderColor:'#FFD24A'}">{{ t.navTreat }}</a>
+    <a href="#" onClick="{{ goTeam }}" style="color:#fff;font-size:13.5px;letter-spacing:.04em;opacity:.86;border-bottom:1px solid transparent;transition:opacity .2s,border-color .2s,color .2s" style-hover="{opacity:1, color:'#FFD24A', borderColor:'#FFD24A'}">{{ t.navTeam }}</a>
+    <a href="#" onClick="{{ goPrices }}" style="color:#fff;font-size:13.5px;letter-spacing:.04em;opacity:.86;border-bottom:1px solid transparent;transition:opacity .2s,border-color .2s,color .2s" style-hover="{opacity:1, color:'#FFD24A', borderColor:'#FFD24A'}">{{ t.navFees }}</a>
+    <a href="#" onClick="{{ goAbout }}" style="color:#fff;font-size:13.5px;letter-spacing:.04em;opacity:.86;border-bottom:1px solid transparent;transition:opacity .2s,border-color .2s,color .2s" style-hover="{opacity:1, color:'#FFD24A', borderColor:'#FFD24A'}">{{ t.navAbout }}</a>
+    <a href="#" onClick="{{ goBlog }}" style="color:#fff;font-size:13.5px;letter-spacing:.04em;opacity:.86;border-bottom:1px solid transparent;transition:opacity .2s,border-color .2s,color .2s" style-hover="{opacity:1, color:'#FFD24A', borderColor:'#FFD24A'}">{{ t.navJournal }}</a>
+    <a href="#" onClick="{{ goContact }}" style="color:#fff;font-size:13.5px;letter-spacing:.04em;opacity:.86;border-bottom:1px solid transparent;transition:opacity .2s,border-color .2s,color .2s" style-hover="{opacity:1, color:'#FFD24A', borderColor:'#FFD24A'}">{{ t.navContact }}</a>
+    <a href="#" onClick="{{ toggleLang }}" style="color:#fff;font-size:12px;letter-spacing:.16em;opacity:.7;border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:7px 12px" style-hover="{opacity:1;color:'#FFD24A'}">{{ langLabel }}</a>
+    <a href="#" onClick="{{ goBook }}" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;background:#F5B301;color:#1A1613;white-space:nowrap;flex:none;font-size:13px;font-weight:500;letter-spacing:.04em" style-hover="{background:'#FFD24A',transform:'translateY(-1px)'}">{{ t.cta }}</a>
+  </nav>
+</header>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<main>
+  <section data-screen-label="Home / hero" style="position:relative;height:100vh;min-height:640px;width:100%;overflow:hidden">
+    <div style="position:absolute;inset:0">
+      <img src="./assets/hero-reception.png" alt="Perfect Smile reception" style="width:100%;height:100%;object-fit:cover;object-position:38% 55%;display:block">
+    </div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(26,22,19,.7) 0%, rgba(26,22,19,.5) 42%, rgba(26,22,19,.88) 100%);pointer-events:none"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(60% 48% at 50% 52%, rgba(18,15,12,.6) 0%, rgba(18,15,12,0) 100%);pointer-events:none"></div>
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;pointer-events:none">
+      <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#F5B301;margin-bottom:28px">Budapest II. · Fő utca 71.</span>
+      <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(46px,6.4vw,104px);line-height:.98;color:#fff;margin:0;max-width:15em;letter-spacing:-.01em;text-wrap:balance">{{ t.heroTitle }}</h1>
+      <p style="max-width:52ch;margin:28px 0 0;font-size:17.5px;line-height:1.65;color:rgba(255,255,255,.8);text-wrap:pretty">{{ t.heroText }}</p>
+      <div style="display:flex;gap:14px;margin-top:40px;pointer-events:auto">
+        <a href="#" onClick="{{ goBook }}" style="padding:16px 30px;border-radius:999px;background:#F5B301;color:#1A1613;white-space:nowrap;flex:none;font-size:14px;font-weight:500;letter-spacing:.03em" style-hover="{background:'#FFD24A'}">{{ t.cta }}</a>
+        <a href="#" onClick="{{ goServices }}" style="padding:16px 30px;border-radius:999px;border:1px solid rgba(255,255,255,.4);color:#fff;font-size:14px;letter-spacing:.03em;white-space:nowrap;flex:none" style-hover="{background:'rgba(255,255,255,.12)'}">{{ t.heroCta2 }}</a>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Home / studio tour" ref="{{ tourRef }}" style="position:relative;height:680vh;background:#1A1613">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden">
+      <sc-for list="{{ rooms }}" as="r" hint-placeholder-count="6">
+        <div data-room="{{ $index }}" style="position:absolute;inset:0;opacity:0;will-change:opacity,transform">
+          <img data-src="{{ r.src }}" alt="{{ r.title }}" style="width:100%;height:100%;object-fit:cover;display:block">
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,22,19,.55) 0%,rgba(26,22,19,.25) 45%,rgba(26,22,19,.9) 100%)"></div>
+        </div>
+      </sc-for>
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 48px 96px">
+        <div style="max-width:1200px;margin:0 auto;width:100%">
+          <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#F5B301">{{ t.tourEyebrow }}</span>
+          <div style="position:relative;min-height:270px">
+          <sc-for list="{{ rooms }}" as="r" hint-placeholder-count="6">
+            <div data-caption="{{ $index }}" style="position:absolute;left:0;right:0;top:0;opacity:0;will-change:opacity,transform">
+              <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(36px,5vw,72px);line-height:1.02;color:#fff;margin:16px 0 0;max-width:20ch">{{ r.title }}</h2>
+              <p style="font-size:17px;line-height:1.6;color:rgba(255,255,255,.78);margin:16px 0 0;max-width:46ch">{{ r.text }}</p>
+            </div>
+          </sc-for>
+          </div>
+        </div>
+      </div>
+      <div style="position:absolute;right:40px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ rooms }}" as="r" hint-placeholder-count="6">
+          <span data-dot="{{ $index }}" style="display:block;width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .3s,transform .3s"></span>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Home / reviews" style="background:#E9E0D1;padding:120px 48px">
+    <div style="max-width:1200px;margin:0 auto">
+      <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:56px">
+        <div>
+          <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#B98A00">{{ t.reviewsEyebrow }}</span>
+          <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(32px,3.6vw,50px);line-height:1.06;margin:18px 0 0">{{ t.reviewsTitle }}</h2>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px;letter-spacing:.02em;color:#1A1613;opacity:.7">
+          <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h11.9c-.5 2.8-2.1 5.1-4.4 6.7v5.6h7.1c4.2-3.9 6.5-9.6 6.5-16.8z"></path><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.6-5.3l-7.1-5.6c-2 1.3-4.5 2.1-7.5 2.1-5.8 0-10.7-3.9-12.5-9.2H4.1v5.8C7.9 41.1 15.3 46 24 46z"></path><path fill="#FBBC05" d="M11.5 27.9c-.4-1.3-.7-2.6-.7-4s.3-2.7.7-4v-5.8H4.1C2.7 16.9 2 20.3 2 24s.7 7.1 2.1 9.8l7.4-5.9z"></path><path fill="#EA4335" d="M24 10.9c3.2 0 6 1.1 8.2 3.2l6.3-6.3C34.9 4.2 29.9 2 24 2 15.3 2 7.9 6.9 4.1 14.2l7.4 5.8c1.8-5.3 6.7-9.1 12.5-9.1z"></path></svg>
+          {{ t.reviewsStat }}
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+        <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="6">
+          <div style="background:#fff;border:1px solid rgba(26,22,19,.1);border-radius:10px;padding:28px 26px;box-shadow:0 1px 2px rgba(26,22,19,.06)">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+              <div style="width:38px;height:38px;border-radius:50%;background:#F5B301;color:#1A1613;display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:18px;flex:none">{{ r.initial }}</div>
+              <div>
+                <div style="font-size:14px;font-weight:600;color:#1A1613">{{ r.who }}</div>
+                <div style="font-size:12px;color:rgba(26,22,19,.5)">{{ r.meta }}</div>
+              </div>
+            </div>
+            <div style="color:#F5B301;font-size:14px;letter-spacing:2px;margin-bottom:12px">★★★★★</div>
+            <p style="font-size:15px;line-height:1.55;color:#1A1613;margin:0">{{ r.quote }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Home / callback" style="background:#1A1613;color:#fff;padding:120px 48px">
+    <div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:minmax(260px,1fr) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:start">
+      <div>
+        <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#F5B301">{{ t.bookingEyebrow }}</span>
+        <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(32px,3.6vw,50px);line-height:1.06;margin:18px 0 22px">{{ t.callbackTitle }}</h2>
+        <p style="font-size:16.5px;line-height:1.7;color:rgba(255,255,255,.7);margin:0 0 34px;text-wrap:pretty">{{ t.callbackText }} <a href="tel:+3612124272" style="color:#F5B301;border-bottom:1px solid rgba(245,179,1,.4)">+36 1 212 4272</a>.</p>
+        <div style="font-size:14px;line-height:1.9;color:rgba(255,255,255,.6)">1027 Budapest, Fő utca 71.<br>{{ t.cDistrict }}</div>
+      </div>
+      <div style="display:grid;gap:16px">
+        <input placeholder="{{ t.fFull }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:15px;font-family:'DM Sans',sans-serif;outline:none">
+        <input placeholder="{{ t.fPhone }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:15px;font-family:'DM Sans',sans-serif;outline:none">
+        <input placeholder="{{ t.fEmail }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:15px;font-family:'DM Sans',sans-serif;outline:none">
+        <input placeholder="{{ t.fTreat }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:15px;font-family:'DM Sans',sans-serif;outline:none">
+        <input placeholder="{{ t.fTime }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:15px;font-family:'DM Sans',sans-serif;outline:none">
+        <button style="margin-top:18px;padding:17px 30px;border:0;border-radius:999px;background:#F5B301;color:#1A1613;white-space:nowrap;flex:none;font-size:14px;font-weight:500;letter-spacing:.04em;font-family:'DM Sans',sans-serif;cursor:pointer" style-hover="{background:'#FFD24A'}">{{ t.cta }}</button>
+        <div style="font-size:12px;line-height:1.6;color:rgba(255,255,255,.45)">{{ t.privacyNote }}</div>
+      </div>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isServices }}">
+<main style="padding:180px 48px 120px;background:#E9E0D1;background-image:linear-gradient(180deg, rgba(26,22,19,.16) 0, rgba(26,22,19,0) 300px)">
+  <div style="max-width:1200px;margin:0 auto">
+    <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#B98A00">{{ t.navTreat }}</span>
+    <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(40px,5.4vw,80px);line-height:1.02;margin:20px 0 0;max-width:18ch">{{ t.servTitle }}</h1>
+    <p style="max-width:56ch;font-size:17.5px;line-height:1.7;opacity:.7;margin:28px 0 72px">{{ t.servText }}</p>
+    <div style="display:grid;gap:1px;background:rgba(26,22,19,.14)">
+      <sc-for list="{{ allServices }}" as="s" hint-placeholder-count="9">
+        <a href="#" onClick="{{ goTreatment }}" style="display:grid;grid-template-columns:64px 1.1fr 1.6fr auto;gap:32px;align-items:center;background:#F4EEE2;padding:34px 32px;transition:background .2s" style-hover="{background:'#fff8e6'}">
+          <span style="font-family:'Instrument Serif',serif;color:#B98A00;font-size:15px">{{ s.num }}</span>
+          <span style="font-family:'Instrument Serif',serif;font-size:27px">{{ s.name }}</span>
+          <span style="font-size:14.5px;line-height:1.6;opacity:.68">{{ s.desc }}</span>
+          <span style="font-size:13px;letter-spacing:.1em;white-space:nowrap;opacity:.6">{{ t.from }} {{ s.price }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isTreatment }}">
+<main style="background:#E9E0D1">
+  <section style="position:relative;height:62vh;min-height:460px">
+    <div style="position:absolute;inset:0"><image-slot id="ps-treat-hero" shape="rect" placeholder="{{ t.phTreat }}"></image-slot></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,22,19,.7),rgba(26,22,19,.5));pointer-events:none"></div>
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:64px 48px;pointer-events:none">
+      <div style="max-width:1200px;margin:0 auto;width:100%">
+        <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#F5B301">{{ t.trEyebrow }}</span>
+        <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(42px,5.6vw,84px);line-height:1;color:#fff;margin:18px 0 0">{{ t.trTitle }}</h1>
+      </div>
+    </div>
+  </section>
+  <section style="padding:96px 48px">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(240px,.7fr);gap:clamp(32px,5vw,88px);align-items:start">
+      <div>
+        <p style="font-size:21px;line-height:1.6;margin:0 0 32px;text-wrap:pretty">{{ t.trLead }}</p>
+        <p style="font-size:16.5px;line-height:1.8;opacity:.72;margin:0 0 48px">{{ t.trBody }}</p>
+        <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:34px;margin:0 0 28px">{{ t.trSteps }}</h2>
+        <div style="display:grid;gap:1px;background:rgba(26,22,19,.14)">
+          <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+            <div style="background:#E9E0D1;display:grid;grid-template-columns:auto 1fr;gap:28px;padding:26px 0;align-items:baseline">
+              <span style="font-family:'Instrument Serif',serif;font-size:30px;color:#F5B301;min-width:46px">{{ st.n }}</span>
+              <div>
+                <div style="font-size:18px;margin-bottom:8px">{{ st.title }}</div>
+                <div style="font-size:15px;line-height:1.65;opacity:.68">{{ st.text }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <aside style="background:#1A1613;color:#fff;padding:40px 34px;position:sticky;top:110px">
+        <div style="font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:#F5B301">{{ t.trGlance }}</div>
+        <div style="font-family:'Instrument Serif',serif;font-size:46px;margin:22px 0 6px">170.000 Ft</div>
+        <div style="font-size:13px;opacity:.6;margin-bottom:32px">{{ t.trPriceNote }}</div>
+        <div style="display:grid;gap:18px;font-size:14.5px;line-height:1.5;border-top:1px solid rgba(255,255,255,.14);padding-top:26px">
+          <sc-for list="{{ trFacts }}" as="f" hint-placeholder-count="4"><div><span style="opacity:.55">{{ f.k }}</span><br>{{ f.v }}</div></sc-for>
+        </div>
+        <a href="#" onClick="{{ goBook }}" style="display:block;text-align:center;margin-top:34px;padding:16px;border-radius:999px;background:#F5B301;color:#1A1613;white-space:nowrap;flex:none;font-size:14px;font-weight:500" style-hover="{background:'#FFD24A'}">{{ t.cta }}</a>
+      </aside>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isTeam }}">
+<main style="padding:180px 48px 120px;background:#E9E0D1;background-image:linear-gradient(180deg, rgba(26,22,19,.16) 0, rgba(26,22,19,0) 300px)">
+  <div style="max-width:1200px;margin:0 auto">
+    <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#B98A00">{{ t.navTeam }}</span>
+    <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(40px,5.4vw,80px);line-height:1.02;margin:20px 0 72px;max-width:16ch">{{ t.teamTitle }}</h1>
+    <sc-for list="{{ teamGroups }}" as="g" hint-placeholder-count="4">
+      <div style="margin-bottom:80px">
+        <div style="display:flex;align-items:center;gap:20px;margin-bottom:36px">
+          <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;margin:0;white-space:nowrap">{{ g.title }}</h2>
+          <span style="flex:1;height:1px;background:rgba(26,22,19,.18)"></span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
+          <sc-for list="{{ g.people }}" as="d">
+            <div data-reveal="" style="display:grid;grid-template-columns:140px minmax(0,1fr);background:#1A1613;transition:background .25s" style-hover="{background:'#241F1A'}">
+              <div role="img" aria-label="{{ d.name }}" style="aspect-ratio:3/4;background-color:#1A1613;background-image:url({{ d.photo }});background-size:cover;background-repeat:no-repeat;background-position:50% 18%"></div>
+              <div style="display:flex;flex-direction:column;justify-content:center;padding:20px 24px">
+                <div style="font-family:'Instrument Serif',serif;font-weight:400;font-size:24px;line-height:1.1;letter-spacing:.04em;text-transform:uppercase;color:#FBF8F2">{{ d.name }}</div>
+                <div style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;line-height:1.55;color:rgba(251,248,242,.62);margin-top:10px">{{ d.role }}</div>
+                <div style="margin-top:22px;display:flex;flex-direction:column;align-items:center;gap:5px">
+                  <span style="font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:rgba(251,248,242,.5)">Perfect Smile</span>
+                  <span style="display:block;width:52px;height:9px;border-bottom:1.5px solid #B98A00;border-radius:0 0 50% 50% / 0 0 100% 100%"></span>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isPrices }}">
+<main style="padding:180px 48px 120px;background:#E9E0D1;background-image:linear-gradient(180deg, rgba(26,22,19,.16) 0, rgba(26,22,19,0) 300px)">
+  <div style="max-width:980px;margin:0 auto">
+    <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#B98A00">{{ t.navFees }}</span>
+    <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(40px,5.4vw,78px);line-height:1.02;margin:20px 0 24px;max-width:18ch">{{ t.feesTitle }}</h1>
+    <p style="max-width:56ch;font-size:17px;line-height:1.7;opacity:.7;margin:0 0 64px">{{ t.feesText }}</p>
+    <sc-for list="{{ priceGroups }}" as="g" hint-placeholder-count="3">
+      <div style="margin-bottom:56px">
+        <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;margin:0 0 4px;padding-bottom:16px;border-bottom:1px solid rgba(26,22,19,.2)">{{ g.title }}</h2>
+        <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:18px 0;border-bottom:1px solid rgba(26,22,19,.08)">
+            <span style="font-size:16.5px">{{ r.name }}</span>
+            <span style="font-family:'Instrument Serif',serif;font-size:22px;white-space:nowrap">{{ r.price }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-for>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isAbout }}">
+<main style="background:#E9E0D1;background-image:linear-gradient(180deg, rgba(26,22,19,.16) 0, rgba(26,22,19,0) 300px)">
+  <section style="padding:180px 48px 96px">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(280px,1fr) minmax(0,1fr);gap:clamp(32px,5vw,80px);align-items:center">
+      <div>
+        <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#B98A00">{{ t.navAbout }}</span>
+        <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(38px,4.8vw,70px);line-height:1.04;margin:20px 0 28px">{{ t.aboutTitle }}</h1>
+        <p style="font-size:17.5px;line-height:1.7;opacity:.75;margin:0 0 22px;text-wrap:pretty">{{ t.aboutP1 }}</p>
+        <p style="font-size:16.5px;line-height:1.8;opacity:.68;margin:0 0 22px">{{ t.aboutP2 }}</p>
+        <p style="font-size:16.5px;line-height:1.8;opacity:.68;margin:0">{{ t.aboutP3 }}</p>
+      </div>
+      <div data-reveal="" style="position:relative;height:600px"><image-slot id="ps-about" shape="rect" src="./assets/room-lounge.png" placeholder="Reception or interior photograph"></image-slot></div>
+    </div>
+  </section>
+  <section style="padding:0 48px 96px">
+    
+  </section>
+  <section style="padding:0 48px 96px">
+    <div style="max-width:1200px;margin:0 auto">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:24px">
+        <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;margin:0">{{ t.galleryTitle }}</h2>
+        <span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.5">{{ t.galleryHint }}</span>
+      </div>
+      <div style="display:flex;gap:16px;overflow-x:auto;padding-bottom:14px;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none" data-hide-scrollbar="gallery">
+        <sc-for list="{{ gallery }}" as="g">
+          <figure style="flex:0 0 auto;width:min(420px,72vw);margin:0;scroll-snap-align:start">
+            <div role="img" aria-label="{{ g.cap }}" style="height:300px;background-color:#DCD1BE;background-image:url({{ g.src }});background-size:cover;background-position:50% 50%"></div>
+            <figcaption style="margin-top:12px;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.55">{{ g.cap }}</figcaption>
+          </figure>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  <section style="padding:0 48px 96px">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(26,22,19,.14)">
+      <sc-for list="{{ aboutFacts }}" as="f" hint-placeholder-count="4">
+        <div style="background:#E9E0D1;padding:34px 28px">
+          <div style="font-family:'Instrument Serif',serif;font-size:40px;line-height:1">{{ f.n }}</div>
+          <div style="margin-top:12px;font-size:14px;line-height:1.6;opacity:.7">{{ f.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  <section style="padding:0 48px 120px">
+    <div style="max-width:900px;margin:0 auto;border-top:1px solid rgba(26,22,19,.16);padding-top:44px">
+      <p style="font-family:'Instrument Serif',serif;font-weight:400;font-size:26px;line-height:1.4;margin:0 0 18px;text-wrap:pretty">„{{ t.aboutQuote }}”</p>
+      <div style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;opacity:.55">{{ t.aboutQuoteWho }}</div>
+    </div>
+  </section>
+  <section style="padding:0 48px 120px">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(26,22,19,.14)">
+      <sc-for list="{{ values }}" as="v" hint-placeholder-count="3">
+        <div style="background:#E9E0D1;padding:40px 34px 34px">
+          <h3 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:26px;margin:0 0 14px">{{ v.title }}</h3>
+          <p style="font-size:15px;line-height:1.65;opacity:.7;margin:0">{{ v.text }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isBlog }}">
+<main style="padding:180px 48px 120px;background:#E9E0D1;background-image:linear-gradient(180deg, rgba(26,22,19,.16) 0, rgba(26,22,19,0) 300px)">
+  <div style="max-width:1200px;margin:0 auto">
+    <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#B98A00">{{ t.navJournal }}</span>
+    <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(40px,5.4vw,78px);line-height:1.02;margin:20px 0 72px;max-width:16ch">{{ t.blogTitle }}</h1>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px">
+      <sc-for list="{{ posts }}" as="p">
+        <a href="{{ p.url }}" target="_blank" rel="noopener" data-reveal="" style="display:block" style-hover="{transform:'translateY(-4px)'}">
+          <div style="aspect-ratio:3/2;background-color:#EFEAE0;background-image:url({{ p.cover }});background-size:cover;background-position:50% 50%"></div>
+          <div style="margin-top:20px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#B98A00">{{ p.cat }} · {{ p.date }}</div>
+          <h3 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:25px;line-height:1.2;margin:12px 0 10px;text-wrap:pretty">{{ p.title }}</h3>
+          <p style="font-size:14.5px;line-height:1.6;opacity:.68;margin:0">{{ p.excerpt }}</p>
+        </a>
+      </sc-for>
+    </div>
+    <div style="margin-top:96px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:12px">
+        <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:34px;margin:0">{{ t.podcastTitle }}</h2>
+        <a href="https://www.youtube.com/channel/UCVopQ7hfmFVhyRaEIzL3HCQ" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.03em;color:#1A1613;opacity:.7" style-hover="{opacity:1,color:'#B98A00'}">YouTube →</a>
+      </div>
+      <p style="font-size:15.5px;line-height:1.7;opacity:.68;max-width:64ch;margin:0 0 40px">{{ t.podcastText }}</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px">
+        <sc-for list="{{ podcasts }}" as="ep" hint-placeholder-count="8">
+          <a href="{{ ep.url }}" target="_blank" rel="noopener" data-reveal="" style="display:block;background:{{ ep.bg }};border-radius:10px;padding:18px;color:#fff" style-hover="{transform:'translateY(-3px)'}">
+            <div style="font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.75;margin-bottom:10px">#balsaidoki</div>
+            <p style="font-family:'Instrument Serif',serif;font-size:19px;line-height:1.25;margin:0 0 14px;min-height:48px">{{ ep.title }}</p>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:11.5px;opacity:.7">{{ ep.source }}</span>
+              <span style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center">▶</span>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isContact }}">
+<main style="padding:180px 48px 120px;background:#E9E0D1;background-image:linear-gradient(180deg, rgba(26,22,19,.16) 0, rgba(26,22,19,0) 300px)">
+  <div style="max-width:1200px;margin:0 auto">
+    <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#B98A00">{{ t.navContact }}</span>
+    <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(40px,5.4vw,78px);line-height:1.02;margin:20px 0 64px;max-width:16ch">Fő utca 71., Budapest II.</h1>
+    <div style="display:grid;grid-template-columns:minmax(280px,.9fr) minmax(0,1.1fr);gap:clamp(28px,4vw,72px);align-items:start">
+      <div style="display:grid;gap:34px">
+        <div>
+          <div style="font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#B98A00;margin-bottom:12px">{{ t.cAddress }}</div>
+          <div style="font-size:18px;line-height:1.7">1027 Budapest, Fő utca 71.<br>{{ t.cDistrict }}</div>
+        </div>
+        <div>
+          <div style="font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#B98A00;margin-bottom:12px">{{ t.cReception }}</div>
+          <div style="font-size:18px;line-height:1.7"><a href="tel:+3612124272">+36 1 212 4272</a><br><a href="tel:+36205156271">+36 20 515 6271</a></div>
+        </div>
+        <div>
+          <div style="font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#B98A00;margin-bottom:12px">{{ t.cHours }}</div>
+          <div style="font-size:16px;line-height:1.9;opacity:.75">{{ t.cHours1 }}<br>{{ t.cHours2 }}</div>
+        </div>
+        <div>
+          <div style="font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#B98A00;margin-bottom:12px">{{ t.cStation }}</div>
+          <div style="font-size:16px;line-height:1.8;opacity:.75">{{ t.cStationText }}</div>
+        </div>
+      </div>
+      <div style="display:grid;gap:16px">
+        <div style="position:relative;height:340px;background:#DCD1BE">
+          <iframe src="https://maps.google.com/maps?layer=c&cbll=47.5096684,19.0384315&cbp=12,72.01,0,0,17.42&output=svembed" style="width:100%;height:100%;border:0" loading="lazy" title="Perfect Smile — Street View"></iframe>
+        </div>
+        <div style="position:relative;height:190px;background:#DCD1BE">
+          <iframe src="https://maps.google.com/maps?q=F%C5%91%20utca%2071%2C%201027%20Budapest&amp;output=embed" style="width:100%;height:100%;border:0" loading="lazy" title="Perfect Smile — Google Maps"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isBook }}">
+<main style="padding:180px 48px 120px;background:#1A1613;color:#fff;min-height:100vh">
+  <div style="max-width:820px;margin:0 auto">
+    <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#F5B301">{{ t.bookingEyebrow }}</span>
+    <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(40px,5vw,72px);line-height:1.04;margin:20px 0 22px;max-width:18ch">{{ t.cta }}</h1>
+    <p style="font-size:17px;line-height:1.7;color:rgba(255,255,255,.7);max-width:52ch;margin:0 0 56px">{{ t.bookText }}</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px 32px">
+      <input placeholder="{{ t.fFirst }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+      <input placeholder="{{ t.fLast }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+      <input placeholder="{{ t.fPhone }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+      <input placeholder="{{ t.fEmail }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+      <input placeholder="{{ t.fTreat }}" style="grid-column:1 / -1;background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+      <input placeholder="{{ t.fTime }}" style="grid-column:1 / -1;background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+    </div>
+    <button style="margin-top:44px;padding:18px 40px;border:0;border-radius:999px;background:#F5B301;color:#1A1613;white-space:nowrap;flex:none;font-size:15px;font-weight:500;letter-spacing:.04em;font-family:'DM Sans',sans-serif;cursor:pointer" style-hover="{background:'#FFD24A'}">{{ t.cta }}</button>
+    <div style="margin-top:20px;font-size:13px;color:rgba(255,255,255,.45)">{{ t.bookCall }} <a href="tel:+3612124272" style="color:#F5B301">+36 1 212 4272</a>.</div>
+  </div>
+</main>
+</sc-if>
+
+<footer style="background:#141110;color:rgba(255,255,255,.72);padding:80px 48px 40px">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px;color:#fff;margin-bottom:20px">
+        <span style="display:block;width:30px;height:30px;border-radius:8px;background:linear-gradient(160deg,#FFD24A,#F0A800);position:relative;overflow:hidden">
+          <span style="position:absolute;left:14%;right:14%;top:36%;height:34%;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:3px solid #fff"></span>
+        </span>
+        <span style="font-family:'Instrument Serif',serif;font-size:21px">Perfect Smile</span>
+      </div>
+      <p style="font-size:14px;line-height:1.7;max-width:34ch;margin:0">{{ t.footBlurb }}</p>
+    </div>
+    <div style="display:grid;gap:10px;font-size:14px">
+      <div style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#F5B301;margin-bottom:6px">{{ t.navTreat }}</div>
+      <a href="#" onClick="{{ goTreatment }}" style="color:rgba(255,255,255,.72)">{{ t.fImplants }}</a>
+      <a href="#" onClick="{{ goServices }}" style="color:rgba(255,255,255,.72)">{{ t.fOrtho }}</a>
+      <a href="#" onClick="{{ goServices }}" style="color:rgba(255,255,255,.72)">{{ t.fCosmetic }}</a>
+      <a href="#" onClick="{{ goServices }}" style="color:rgba(255,255,255,.72)">{{ t.fHygiene }}</a>
+    </div>
+    <div style="display:grid;gap:10px;font-size:14px">
+      <div style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#F5B301;margin-bottom:6px">{{ t.footPractice }}</div>
+      <a href="#" onClick="{{ goAbout }}" style="color:rgba(255,255,255,.72)">{{ t.navAbout }}</a>
+      <a href="#" onClick="{{ goTeam }}" style="color:rgba(255,255,255,.72)">{{ t.navTeam }}</a>
+      <a href="#" onClick="{{ goPrices }}" style="color:rgba(255,255,255,.72)">{{ t.footFees }}</a>
+      <a href="#" onClick="{{ goBlog }}" style="color:rgba(255,255,255,.72)">{{ t.navJournal }}</a>
+    </div>
+    <div style="display:grid;gap:10px;font-size:14px">
+      <div style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#F5B301;margin-bottom:6px">{{ t.footVisit }}</div>
+      <span>1027 Budapest<br>Fő utca 71.</span>
+      <a href="tel:+3612124272" style="color:rgba(255,255,255,.72)">+36 1 212 4272</a>
+      <a href="tel:+36205156271" style="color:rgba(255,255,255,.72)">+36 20 515 6271</a>
+    </div>
+  </div>
+  <div style="max-width:1200px;margin:56px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:24px;font-size:12px;color:rgba(255,255,255,.4)">
+    <span>© 2026 Perfect Smile fogászat</span>
+    <span style="display:flex;gap:24px"><a href="#" style="color:rgba(255,255,255,.4)">{{ t.footPrivacy }}</a><a href="#" style="color:rgba(255,255,255,.4)">{{ t.footComplaints }}</a><a href="#" style="color:rgba(255,255,255,.4)">{{ t.footGuarantee }}</a></span>
+  </div>
+</footer>
+
+<div style="position:fixed;right:24px;bottom:24px;z-index:80;display:flex;flex-direction:column;align-items:flex-end;gap:14px">
+  <sc-if value="{{ chatOpen }}">
+    <div style="width:352px;max-width:calc(100vw - 48px);max-height:calc(100vh - 140px);display:flex;flex-direction:column;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 18px 44px rgba(26,22,19,.22)">
+      <div style="background:#F5B301;color:#1A1613;padding:15px 18px;display:flex;align-items:center;gap:12px;flex:none">
+        <span style="flex:1;font-size:15.5px;font-weight:500">{{ t.chatTitle }}</span>
+        <a href="#" onClick="{{ toggleChat }}" style="color:#1A1613;font-size:22px;line-height:1;opacity:.8" style-hover="{opacity:1,color:'#1A1613'}">×</a>
+      </div>
+      <div style="padding:18px;display:flex;flex-direction:column;gap:10px;flex:1 1 auto;min-height:0;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;background:#fff" data-hide-scrollbar="chat" ref="{{ chatScrollRef }}">
+        <sc-for list="{{ chatMsgs }}" as="m">
+          <div style="max-width:88%;align-self:{{ m.align }};background:{{ m.bg }};color:{{ m.fg }};border-radius:10px;padding:11px 14px;font-size:13.5px;line-height:1.5">{{ m.text }}</div>
+        </sc-for>
+      </div>
+      <div style="padding:0 18px 8px;display:flex;flex-direction:column;gap:8px;background:#fff;flex:none">
+        <sc-for list="{{ chatChips }}" as="c">
+          <a href="#" onClick="{{ c.pick }}" style="align-self:flex-start;max-width:100%;font-size:12.5px;padding:8px 13px;border:1px solid #DDE4F5;background:#F7F9FE;border-radius:8px;color:#1A1613;line-height:1.35" style-hover="{background:'#F5B301',borderColor:'#F5B301',color:'#1A1613'}">{{ c.label }}</a>
+        </sc-for>
+      </div>
+      <div style="padding:12px 18px 8px;background:#fff;flex:none">
+        <div style="display:flex;align-items:center;gap:10px;background:#EFEFEF;border-radius:10px;padding:12px 14px">
+          <input value="{{ chatInput }}" onChange="{{ onChatInput }}" onKeyDown="{{ onChatKey }}" placeholder="{{ t.chatPlaceholder }}" style="flex:1;min-width:0;background:transparent;border:0;font-size:14px;font-family:'DM Sans',sans-serif;color:#1A1613;outline:none">
+          <a href="#" onClick="{{ sendChat }}" style="color:#F5B301;font-size:19px;line-height:1;flex:none" style-hover="{color:'#D99C00'}">➤</a>
+        </div>
+        <div style="text-align:center;font-size:11.5px;color:rgba(26,22,19,.35);padding:12px 0 8px">{{ t.chatPowered }}</div>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ chatClosed }}">
+    <span style="background:#F5B301;color:#8A1220;font-size:12.5px;line-height:1.5;padding:10px 14px;border-radius:6px;max-width:150px;align-self:flex-end">{{ t.chatTeaser }}</span>
+  </sc-if>
+  <div style="display:flex;align-items:center;gap:12px">
+    <a href="#" onClick="{{ toggleChat }}" style="width:56px;height:56px;flex:none;border-radius:50%;background:#F5B301;color:#1A1613;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(26,22,19,.26);position:relative;overflow:hidden" style-hover="{background:'#FFD24A',color:'#1A1613'}">
+      <sc-if value="{{ chatClosed }}"><span style="position:absolute;left:26%;right:26%;top:40%;height:26%;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:3px solid #fff"></span></sc-if>
+      <sc-if value="{{ chatOpen }}"><span style="font-size:20px;line-height:1">⌄</span></sc-if>
+    </a>
+  </div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { chatOpen: false, chatInput: "", chat: [], lang: "hu", scrolled: false, page: "home", c: [0, 0, 0, 0] };
+
+  go(page) {
+    return (e) => {
+      if (e) e.preventDefault();
+      this.setState({ page }, () => window.scrollTo(0, 0));
+    };
+  }
+
+  tourRef = React.createRef();
+  rootRef = React.createRef();
+  chatScrollRef = React.createRef();
+  _revealed = new WeakSet();
+
+  setupReveals() {
+    const root = this.rootRef.current;
+    if (!root) return;
+    const vh = window.innerHeight || 800;
+    const nodes = root.querySelectorAll("[data-reveal]");
+    if (!this._io && "IntersectionObserver" in window) {
+      this._io = new IntersectionObserver((entries) => {
+        entries.forEach((en, i) => {
+          if (!en.isIntersecting) return;
+          const el = en.target;
+          this._revealed.add(el);
+          setTimeout(() => this.showReveal(el), i * 90);
+          this._io.unobserve(el);
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    }
+    nodes.forEach((el) => {
+      if (this._revealed.has(el) || el.dataset.revealInit === "1") return;
+      el.dataset.revealInit = "1";
+      const r = el.getBoundingClientRect();
+      if (r.top < vh * 0.9) { this._revealed.add(el); return; }
+      el.style.opacity = "0";
+      el.style.transform = "translateY(28px)";
+      el.style.transition = "opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1)";
+      el.style.willChange = "opacity, transform";
+      if (this._io) this._io.observe(el);
+      else this.showReveal(el);
+    });
+  }
+
+  showReveal(el) {
+    el.style.opacity = "1";
+    el.style.transform = "none";
+    setTimeout(() => { el.style.willChange = "auto"; }, 900);
+  }
+
+  componentDidMount() {
+    this._onScroll = () => {
+      const y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      const sc = y > 80;
+      if (sc !== this.state.scrolled) this.setState({ scrolled: sc });
+      this.startTourLoop();
+    };
+    window.addEventListener("scroll", this._onScroll, { passive: true });
+    window.addEventListener("resize", this._onScroll);
+    document.addEventListener("scroll", this._onScroll, { passive: true, capture: true });
+    this.startTourLoop();
+    this.hydrateTourImages();
+    this.updateTour();
+    this.setupReveals();
+  }
+
+  componentDidUpdate(_p, prev) {
+    if (prev && (prev.chat.length !== this.state.chat.length || prev.chatOpen !== this.state.chatOpen)) {
+      const el = this.chatScrollRef.current;
+      if (el) el.scrollTop = el.scrollHeight;
+    }
+    if ((prev && prev.page) !== this.state.page) {
+      this.hydrateTourImages();
+      this.updateTour();
+      this.setupReveals();
+    }
+
+  }
+
+  hydrateTourImages() {
+    const el = this.tourRef.current;
+    if (!el) return;
+    el.querySelectorAll("img[data-src]").forEach((img) => {
+      const s = img.getAttribute("data-src");
+      if (s && img.getAttribute("src") !== s) img.setAttribute("src", s);
+    });
+  }
+
+  startTourLoop() {
+    if (this._tourRaf) { this._tourIdle = 0; return; }
+    this._tourIdle = 0;
+    const loop = () => {
+      const el = this.tourRef.current;
+      if (!el) { this._tourRaf = null; return; }
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || 800;
+      const near = rect.bottom > -vh && rect.top < vh * 2;
+      if (near) { this.updateTour(); this._tourIdle = 0; } else { this._tourIdle++; }
+      if (this._tourIdle > 30) { this._tourRaf = null; return; }
+      this._tourRaf = requestAnimationFrame(loop);
+    };
+    this._tourRaf = requestAnimationFrame(loop);
+  }
+
+  updateTour() {
+    const el = this.tourRef.current;
+    if (!el) return;
+    const layers = el.querySelectorAll("[data-room]");
+    const caps = el.querySelectorAll("[data-caption]");
+    const dots = el.querySelectorAll("[data-dot]");
+    const n = layers.length;
+    if (!n) return;
+    const rect = el.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const span = Math.max(1, el.offsetHeight - vh);
+    const target = Math.max(0, Math.min(1, -rect.top / span));
+    if (this._tourP == null) this._tourP = target;
+    else this._tourP += (target - this._tourP) * 0.1;
+    if (Math.abs(target - this._tourP) < 0.0004) this._tourP = target;
+    const pos = this._tourP * (n - 1);
+    layers.forEach((l, i) => {
+      const d = Math.abs(pos - i);
+      const w = Math.max(0, 1 - d);
+      const e = w * w * (3 - 2 * w);
+      l.style.opacity = String(e);
+      l.style.transform = "scale(" + (1.08 - 0.08 * e) + ")";
+      const cap = caps[i];
+      if (cap) {
+        const cw = Math.max(0, 1 - d * 1.6);
+        cap.style.opacity = String(cw);
+        cap.style.transform = "translateY(" + (1 - cw) * 26 + "px)";
+        cap.style.pointerEvents = cw > 0.5 ? "auto" : "none";
+      }
+      const dot = dots[i];
+      if (dot) {
+        const on = d < 0.5;
+        dot.style.background = on ? "#F5B301" : "rgba(255,255,255,.3)";
+        dot.style.transform = on ? "scale(1.6)" : "scale(1)";
+      }
+    });
+  }
+
+  animateCounters() {
+    const targets = [17, 3200, 12, 6];
+    const start = performance.now();
+    const dur = 1400;
+    cancelAnimationFrame(this._raf);
+    const tick = (t) => {
+      const p = Math.min(1, (t - start) / dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      this.setState({ c: targets.map((v) => Math.round(v * e)) });
+      if (p < 1) this._raf = requestAnimationFrame(tick);
+    };
+    this._raf = requestAnimationFrame(tick);
+  }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this._raf);
+    if (this._tourRaf) { cancelAnimationFrame(this._tourRaf); this._tourRaf = null; }
+    window.removeEventListener("scroll", this._onScroll);
+    window.removeEventListener("resize", this._onScroll);
+    document.removeEventListener("scroll", this._onScroll, true);
+  }
+
+  fmt(n, i) {
+    if (i === 1) return n.toLocaleString("en-GB") + "+";
+    return String(n);
+  }
+
+  chatReply(question, hu) {
+    const q = (question || "").toLowerCase();
+    const has = (...w) => w.some((x) => q.includes(x));
+    if (has("ár", "mennyi", "ft", "price", "cost", "fee")) {
+      return hu
+        ? "Áraink tájékoztató jellegűek: fogkőeltávolítás 25.000 Ft, esztétikus tömés 30.000 Ft, cirkon korona 120.000 Ft, SGS implantátum 170.000 Ft. A konzultáció után tételes tervet készítünk."
+        : "Our guide prices: scaling 25.000 Ft, aesthetic filling 30.000 Ft, zirconia crown 120.000 Ft, SGS implant 170.000 Ft. After the consultation you receive an itemised plan.";
+    }
+    if (has("implant", "implantát")) {
+      return hu
+        ? "Az SGS-Dental implantátum 170.000 Ft-tól, az All-on-4 220.000 Ft-tól. A beültetés teljes érzéstelenítésben, igény esetén altatásban történik, egyszerű esetben fél óra alatt."
+        : "An SGS-Dental implant starts at 170.000 Ft, All-on-4 at 220.000 Ft. Placement is under full local anaesthetic, or sedation on request — half an hour in simple cases.";
+    }
+    if (has("érzéstelenít", "anaesthetic", "anesthetic", "fájdalom")) {
+      return hu
+        ? "Kezeléseinket teljes helyi érzéstelenítésben végezzük, fájdalommentesen. Félős pácienseknek altatás is elérhető, aneszteziológus jelenlétében (200.000 Ft)."
+        : "Treatments are carried out painlessly under full local anaesthetic. For anxious patients sedation is also available with an anaesthetist present (200.000 Ft).";
+    }
+    if (has("sürgős", "emergency", "urgent", "fájdal")) {
+      return hu
+        ? "Sürgős esetben hívjon minket rendelési időben: +36 1 212 4272 vagy +36 20 515 6271. Fájdalom, törés vagy dagadás esetén igyekszünk aznap fogadni."
+        : "In an emergency call us during opening hours: +36 1 212 4272 or +36 20 515 6271. For pain, a broken tooth or swelling we try to see you the same day.";
+    }
+    if (has("altat", "sedation", "narkó")) {
+      return hu
+        ? "Altatásos kezelést elsősorban műtétekhez és szájsebészeti beavatkozásokhoz javasolunk, aneszteziológus jelenlétében. Díja 200.000 Ft."
+        : "We recommend sedation primarily for surgery and oral surgical procedures, with an anaesthetist present. The fee is 200.000 Ft.";
+    }
+    if (has("nyitva", "óra", "hour", "open", "mikor")) {
+      return hu
+        ? "Hétfőtől péntekig 8:00–12:00 és 13:00–17:00 között fogadjuk pácienseinket, előre egyeztetett időpontban. Szombaton és vasárnap zárva vagyunk."
+        : "We see patients Monday to Friday, 8:00–12:00 and 13:00–17:00, strictly by appointment. We are closed at weekends.";
+    }
+    if (has("hol", "cím", "where", "address", "parkol", "metró")) {
+      return hu
+        ? "A rendelő címe 1027 Budapest, Fő utca 71. (II. kerület), a Batthyány tértől 6 perc gyalog."
+        : "The practice is at Fő utca 71, 1027 Budapest (II. district), six minutes on foot from Batthyány tér.";
+    }
+    if (has("időpont", "foglal", "book", "appointment", "konzult")) {
+      return hu
+        ? "Időpontot telefonon egyeztetünk: +36 1 212 4272 vagy +36 20 515 6271. Hagyhat számot a visszahívás űrlapon is, és egy órán belül keresjük."
+        : "Appointments are arranged by phone: +36 1 212 4272 or +36 20 515 6271. You can also leave your number in the callback form and we will call you within the hour.";
+    }
+    return hu
+      ? "Köszönjük a kérdést! Kollégánk hamarosan válaszol. Ha sürgős, hívjon minket: +36 1 212 4272."
+      : "Thank you for your question — a colleague will reply shortly. If it's urgent, please call us on +36 1 212 4272.";
+  }
+
+  pushChat(text) {
+    const hu = this.state.lang !== "en";
+    if (!text || !text.trim()) return;
+    const mine = { who: "me", text: text.trim() };
+    this.setState({ chat: this.state.chat.concat(mine), chatInput: "" }, () => {
+      const reply = { who: "bot", text: this.chatReply(text, hu) };
+      setTimeout(() => this.setState({ chat: this.state.chat.concat(reply) }), 480);
+    });
+  }
+
+  renderVals() {
+    const p = this.state.page;
+    const hu = this.state.lang !== "en";
+    const T = {
+      hu: {
+        chatTitle: "Perfect Smile AI Asszisztens", chatStatus: "Perfect Smile · online",
+        chatTeaser: "Kérdezze AI asszisztensünket!",
+        chatPlaceholder: "Gépeld be ide kérdésed!",
+        chatPowered: "Powered by MedHubAI",
+        chatGreeting: "Miben segíthetek? • How can I help?",
+        brandSub: "Fogászat · Budapest", navTreat: "Kezelések", navTeam: "Munkatársak", navFees: "Árak",
+        navPatients: "Rólunk mondták", navAbout: "Rólunk", navJournal: "Blog", navContact: "Kapcsolat",
+        cta: "Ingyenes konzultáció kérése", heroCta2: "Szolgáltatásaink",
+        heroTitle: "Megnyugtató környezet, tapasztalt fogorvosok",
+        heroText: "A Perfect Smile fogászat nagy szakmai tapasztalattal rendelkező klinika, amely több mint két évtizedes múltat és több ezer elégedett pácienst tudhat magáénak.",
+        tourEyebrow: "A rendelő", bookingEyebrow: "Időpont",
+        reviewsEyebrow: "Vélemények", reviewsTitle: "Amit a pácienseink írnak", reviewsStat: "90% ajánlja · 129 értékelés Google-on", streetView: "Utcanézet a rendelőről",
+        callbackTitle: "Fogászati rendelés",
+        callbackText: "Felhívjuk szíves figyelmüket, hogy kizárólag telefonon előre egyeztetett időpontban várjuk fogorvosi rendelésünkre. Időpontfoglalásukat hétköznaponként a következő telefonszámon várjuk:",
+        fFull: "Teljes név", fPhone: "Telefonszám", fTreat: "Érdeklődés tárgya (nem kötelező)", fTime: "Mikor hívhatjuk?",
+        fFirst: "Keresztnév", fLast: "Vezetéknév", fEmail: "E-mail",
+        privacyNote: "Adatait kizárólag a visszahívás egyeztetésére használjuk.",
+        servTitle: "A Perfect Smile Fogászat szolgáltatásai",
+        servText: "Fogászati kezeléseink során a legmodernebb technikát alkalmazva kínálunk megoldást problémájára és alakítjuk ki az Ön tökéletes mosolyát.",
+        from: "Ártól:",
+        trEyebrow: "Implantológia", trTitle: "Fog implantátum beültetés",
+        trLead: "A fog implantátum titániumból készült mesterséges foggyökér, melyeket a fogorvos szájsebészeti eljárással a csontba helyez. Az implantátumok a szükséges gyógyulási idő alatt tökéletesen beágyazódnak a csontba, és alkalmasak koronák, hidak, illetve protézisek biztonságos megtartására.",
+        trBody: "Kitűnő szájsebész szakorvosaink több ezer elégedett páciens kezelését végezték már el fájdalommentesen, teljes érzéstelenítéssel vagy bizonyos esetekben akár altatással. Az ingyenes konzultáció alkalmával részletes felvilágosítást adunk az implantátumokról és a kezelés menetéről.",
+        trSteps: "A kezelés menete", trGlance: "Röviden", trPriceNote: "SGS-Dental implantátum",
+        phPortrait: "Portré", phArticle: "Cikk képe", phMap: "Húzzon ide egy térképképet", phTreat: "Kezelés fotója",
+        teamTitle: "Munkatársaink",
+        feesTitle: "Fogászati árak",
+        feesText: "Pácienseink számára személyre szóló, előzetesen egyeztetett tervet készítünk, amely az orvosi szempontok figyelembevétele mellett maximálisan az Ön igényeihez igazítunk.",
+        revTitle: "Rólunk mondták", videoLabel: "Videó ajánló",
+        aboutTitle: "Megnyugtató környezet, tapasztalt fogorvosok",
+        aboutP1: "Budapesten, az egyik legszebb, legmodernebb és innovatív berendezésekkel felszerelt rendelőjébe várjuk kedves Betegeinket. Magasan képzett, nemzetközi tapasztalattal rendelkező fogorvosaink a leghatékonyabb módszerek alkalmazásával segítenek bármilyen típusú fogászati problémája precíz és gyors megoldásában, mindezt megfizethető áron.",
+        aboutP2: "A praxist Dr. Balsai Tamás fogorvos igazgató vezeti, aki már 30 esztendeje áll a Perfect Smile élén. Ez idő alatt a rendelő a Fő utcán egyetlen kabinetből nőtt a mai, több szakterületet átfogó klinikává, amely több mint két évtizedes múltat és több ezer elégedett pácienst tudhat magáénak.",
+        aboutP3: "A névhez köteleztetés is társul: célunk, hogy a tökéletes mosoly valóban tökéletes legyen, ezért minden esetben komplex, holisztikus odafigyeléssel kezeljük a felmerülő problémákat — nem csak a tünetet, hanem az egészet.",
+        aboutQuote: "Megfogadtam, hogy ha a Holdról kell odautaznom, akkor is csak őhozzá megyek: ritkán találkozni ilyen lelkiismeretes és nagy tudású orvossal! A stáb is fantasztikus, mindenki végtelenül kedves és figyelmes, szóval szuper a hely, már rengeteg családtagomat és barátomat „beutaltam” ide.",
+        aboutQuoteWho: "Bárdi Katalin",
+        galleryTitle: "A rendelő", galleryHint: "Húzza oldalra a további képekhez",
+        blogTitle: "Fogászati hírek, újdonságok",
+        podcastTitle: "Dr. Balsai Tamás podcast csatornája", podcastText: "Hanganyagainkat azzal a szándékkal indítottuk, hogy a gyógyítás holisztikus szemléletét közelebb hozzuk az emberekhez — Spotify-on és YouTube-on egyaránt elérhető.",
+        cAddress: "Cím", cReception: "Recepció", cHours: "Nyitvatartás",
+        cHours1: "Hétfő – Péntek 8:00 – 12:00 és 13:00 – 17:00", cHours2: "Szombat, vasárnap zárva",
+        cStation: "Legközelebbi megálló", cStationText: "Batthyány tér, 6 perc gyalog", cDistrict: "Budapest II. kerület",
+        bookText: "Felhívjuk szíves figyelmüket, hogy kizárólag telefonon előre egyeztetett időpontban várjuk fogorvosi rendelésünkre. Időpontfoglalásukat hétköznaponként várjuk.",
+        bookCall: "Vagy hívja közvetlenül a recepciót:",
+        footBlurb: "Magánfogászat Budapest II. kerületében, Dr. Balsai Tamás vezetésével. Digitális tervezés, helyben készülő CBCT és írásos garancia minden kezelésre.",
+        fImplants: "Implantátum", fOrtho: "Fogszabályozás", fCosmetic: "Esztétikai fogászat", fHygiene: "Szájhigiénia",
+        footPractice: "Rendelő", footFees: "Árak és garancia", footVisit: "Látogatás",
+        footPrivacy: "Adatkezelés", footComplaints: "Panaszkezelés", footGuarantee: "Garancia"
+      },
+      en: {
+        chatTitle: "Perfect Smile AI Assistant", chatStatus: "Perfect Smile · online",
+        chatTeaser: "Ask our AI assistant!",
+        chatPlaceholder: "Type your question here!",
+        chatPowered: "Powered by MedHubAI",
+        chatGreeting: "Miben segíthetek? • How can I help?",
+        brandSub: "Dental Studio · Budapest", navTreat: "Treatments", navTeam: "Team", navFees: "Fees",
+        navPatients: "Patients", navAbout: "About", navJournal: "Journal", navContact: "Contact",
+        cta: "Request a free consultation", heroCta2: "Our services",
+        heroTitle: "A reassuring setting, experienced dentists",
+        heroText: "Perfect Smile is a clinic with deep professional experience: more than two decades of practice and several thousand satisfied patients.",
+        tourEyebrow: "The studio", bookingEyebrow: "Booking",
+        reviewsEyebrow: "Reviews", reviewsTitle: "What our patients write", reviewsStat: "90% recommend · 129 reviews on Google", streetView: "Street View of the practice",
+        callbackTitle: "Dental appointments",
+        callbackText: "Please note that we see patients strictly by appointment arranged in advance by telephone. Appointments can be booked on weekdays on:",
+        fFull: "Full name", fPhone: "Phone number", fTreat: "Treatment of interest (optional)", fTime: "Best time to call",
+        fFirst: "First name", fLast: "Last name", fEmail: "Email",
+        privacyNote: "We use your details only to arrange the call.",
+        servTitle: "Perfect Smile services",
+        servText: "In our treatments we apply the most modern techniques available to solve your problem and shape your perfect smile.",
+        from: "From",
+        trEyebrow: "Implantology", trTitle: "Dental implant placement",
+        trLead: "A dental implant is an artificial tooth root made of titanium, placed into the bone by the dentist in an oral surgical procedure. During the healing period implants integrate perfectly into the bone and are able to hold crowns, bridges and dentures securely.",
+        trBody: "Our excellent oral surgeons have already treated several thousand satisfied patients painlessly, under full local anaesthetic or, in certain cases, under sedation. At the free consultation we explain the implants, the course of treatment and what to expect afterwards in detail.",
+        trSteps: "How the treatment runs", trGlance: "At a glance", trPriceNote: "SGS-Dental implant",
+        phPortrait: "Portrait", phArticle: "Article image", phMap: "Drop a map image of the clinic location", phTreat: "Treatment photograph",
+        teamTitle: "Our team",
+        feesTitle: "Dental fees",
+        feesText: "We prepare a personal plan agreed in advance, which alongside the clinical considerations is tailored as far as possible to your own needs.",
+        revTitle: "What they said about us", videoLabel: "Video testimonial",
+        aboutTitle: "A reassuring setting, experienced dentists",
+        aboutP1: "We welcome our patients to one of the most beautiful, most modern practices in Budapest, fitted with innovative equipment. Our highly trained, internationally experienced dentists apply the most effective methods to solve any kind of dental problem precisely and quickly, and at an affordable price.",
+        aboutP2: "The practice is led by Dr. Balsai Tamás, who has headed Perfect Smile for 30 years. In that time it grew from a single surgery on Fő utca into today's multi-disciplinary clinic, with more than two decades of history and several thousand satisfied patients.",
+        aboutP3: "The name is also a commitment: our aim is for a perfect smile to genuinely be perfect, so we treat every problem with complex, holistic attention — not just the symptom, but the whole picture.",
+        aboutQuote: "I promised myself that even if I had to travel from the Moon, I would still only go to him — it's rare to meet such a conscientious, highly skilled doctor. The team is fantastic too, everyone is endlessly kind and attentive, so it's a wonderful place — I've already sent many family members and friends here.",
+        aboutQuoteWho: "Bárdi Katalin",
+        galleryTitle: "The practice", galleryHint: "Drag sideways for more photos",
+        blogTitle: "Dental news and updates",
+        podcastTitle: "Dr. Balsai Tamás's podcast channel", podcastText: "We started these audio episodes to bring a holistic view of healing closer to people — available on both Spotify and YouTube.",
+        cAddress: "Address", cReception: "Reception", cHours: "Opening hours",
+        cHours1: "Monday – Friday 8:00 – 12:00 and 13:00 – 17:00", cHours2: "Saturday, Sunday closed",
+        cStation: "Nearest station", cStationText: "Batthyány tér, 6 minutes on foot", cDistrict: "Budapest II. district",
+        bookText: "Please note that we see patients strictly by appointment arranged in advance by telephone. Appointments can be booked on weekdays.",
+        bookCall: "Or call reception directly on",
+        footBlurb: "Private dental studio in Budapest II., led by Dr. Balsai Tamás. Digital planning, in-house CBCT and a written guarantee on every treatment.",
+        fImplants: "Implants", fOrtho: "Orthodontics", fCosmetic: "Cosmetic dentistry", fHygiene: "Hygiene",
+        footPractice: "Practice", footFees: "Fees & guarantee", footVisit: "Visit",
+        footPrivacy: "Privacy", footComplaints: "Complaints", footGuarantee: "Guarantee"
+      }
+    };
+    const D = {
+      hu: {
+        rooms: [
+          { src: "./assets/room-entrance.png", title: "Belépés a Fő utcáról", text: "Rendelőnk a Budapest II. kerületi Fő utca 71. szám alatt található." },
+          { src: "./assets/room-lounge.png", title: "A váró", text: "Igényes, megnyugtató környezet, barátságos, kedves személyzettel." },
+          { src: "./assets/room-surgery-1.png", title: "Kezelő", text: "Az egyik legszebb, legmodernebb és innovatív berendezésekkel felszerelt rendelő Budapesten." },
+          { src: "./assets/room-surgery-2.png", title: "Szájsebészeti kezelő", text: "Innovatív eszközök, amelyekkel szájsebész szakorvosaink dolgoznak." }
+        ],
+        services: [
+          { num: "01", name: "Fogkő eltávolítás", desc: "A fogkő eltávolítás az egyik legfontosabb fogászati beavatkozás, mely elősegíti a megfelelő szájhigiénia fenntartását, és megelőzi a különböző fogászati problémák kialakulását.", price: "25.000 Ft" },
+          { num: "02", name: "Fogtömés", desc: "Nagyon sok okból kifolyólag alakulhat ki lyukas fog, ami nem csak esztétikailag teszi kellemetlenné a hétköznapokat, hanem akár nagy fájdalmakat is okozhat.", price: "30.000 Ft" },
+          { num: "03", name: "Fogfehérítés", desc: "A mai legmodernebb fogászati technológiával dolgozunk, így kevesebb mint egy óra alatt, akár 4-5 árnyalattal világosabb fogszínt érhetünk el.", price: "80.000 Ft" },
+          { num: "04", name: "Fogpótlások", desc: "Porcelán és cirkon koronák, hidak, inlay, onlay fogpótlás – több tekintetben sem előnyös, ha hiányos fogazattal élünk tovább.", price: "100.000 Ft" },
+          { num: "05", name: "Fog implantátum", desc: "Az implantátumok a szükséges gyógyulási idő alatt tökéletesen beágyazódnak a csontba, és alkalmasak koronák, hidak, illetve protézisek biztonságos megtartására.", price: "170.000 Ft" },
+          { num: "06", name: "Szájsebészet", desc: "Szájsebész szakorvosaink innovatív eszközök segítségével végzik a bölcsességfog eltávolítást, gyökércsúcs rezekciót, ciszta eltávolítást és a bonyolultabb foghúzásokat.", price: "20.000 Ft" }
+        ],
+        extra: [
+          { num: "07", name: "Gyökérkezelés", desc: "A lyukas, sérült fog gyökerében lévő ideg fertőtlenítése és kezelése, hogy a felépülő korona vagy tömés alatt a fog ne pusztuljon tovább.", price: "75.000 Ft" },
+          { num: "08", name: "Parodontológia", desc: "A fogágybetegség, fogínysorvadás, azaz a fogat körülvevő szövetek baktériumok okozta gyulladásos megbetegedéseinek kezelése.", price: "100.000 Ft" },
+          { num: "09", name: "Fogászati CT", desc: "A CBCT-nek köszönhetően több összetett probléma válik orvosolhatóvá, a beavatkozások jobban tervezhetőek, így csökken a kockázati faktor.", price: "20.000 Ft" },
+          { num: "10", name: "Fogszabályozás", desc: "Célunk, hogy egyenletesebb, rendezettebb fogíveket, fogív illeszkedést érjünk el, az egyéni adottságok figyelembe vétele mellett.", price: "300.000 Ft" },
+          { num: "11", name: "Altatásos fogászat", desc: "Az altatásban történő kezelést elsősorban műtétekhez, szájsebészeti beavatkozások esetében javasoljuk.", price: "200.000 Ft" },
+          { num: "12", name: "Gyermekfogászat", desc: "Gyakori tévhit, hogy a tejfogakra kevesebb figyelmet kell fordítani, mint a maradandó fogakra.", price: "10.000 Ft" }
+        ],
+        aboutFacts: [
+          { n: "30", label: "éve vezeti a praxist Dr. Balsai Tamás" },
+          { n: "20+", label: "év szakmai múlt a Fő utcán" },
+          { n: "több ezer", label: "elégedett páciens" },
+          { n: "12", label: "fogorvos, asszisztens és munkatárs" }
+        ],
+        gallery: [
+          { src: "./assets/hero-reception.png", cap: "Recepció a Fő utca 71-ben" },
+          { src: "./assets/room-entrance.png", cap: "Bejárat" },
+          { src: "./assets/room-lounge.png", cap: "Váró" },
+          { src: "./assets/room-surgery-1.png", cap: "Kezelő" },
+          { src: "./assets/room-surgery-2.png", cap: "Szájsebészeti kezelő" }
+        ],
+        teamGroups: [
+          { title: "Vezetés", people: [
+            { photo: "./assets/team-balsai.png", name: "Dr. Balsai Tamás", role: "Igazgató, fogszakorvos, implantológus" },
+            { photo: "./assets/team-kasza.png", name: "Kasza Margó", role: "Irodavezető" }
+          ] },
+          { title: "Fogorvosok", people: [
+            { photo: "./assets/team-hulik.png", name: "Dr. Hulik Emese", role: "parodontológus szakorvos" },
+            { photo: "./assets/team-csernak.png", name: "Dr. Csernák Ádám", role: "fogszakorvos" },
+            { photo: "./assets/team-varga.png", name: "Dr. Varga Márton", role: "fogorvos" },
+            { photo: "./assets/team-borsos.png", name: "Dr. Borsos Gabriella", role: "fogszabályozó szakorvos" },
+            { photo: "./assets/team-meszarics.png", name: "Dr Meszarics Réka", role: "fogorvos" }
+          ] },
+          { title: "Asszisztensek", people: [
+            { photo: "./assets/team-szotak.png", name: "Szoták Marietta", role: "Vezető asszisztens" },
+            { photo: "./assets/team-deme.png", name: "Deme Johanna", role: "fogászati asszisztens" },
+            { photo: "./assets/team-brosko.png", name: "Broskó Nikolett", role: "fogászati asszisztens" }
+          ] },
+          { title: "Recepció", people: [
+            { photo: "./assets/team-horvath.png", name: "Horváth Nicolas", role: "Recepciós" },
+            { photo: "./assets/team-soltesz.png", name: "Soltész Nola Rea", role: "Recepciós" }
+          ] }
+        ],
+        team: [
+          { slot: "ps-dr1", name: "Dr. Balsai Tamás", role: "Igazgató, fogszakorvos, implantológus", quals: "Implantológia" },
+          { slot: "ps-dr2", name: "Dr. Hulik Emese", role: "parodontológus szakorvos", quals: "Parodontológia" },
+          { slot: "ps-dr3", name: "Dr. Csernák Ádám", role: "fogszakorvos", quals: "Fogszakorvos" },
+          { slot: "ps-dr4", name: "Dr. Varga Márton", role: "fogorvos", quals: "Fogorvos" },
+          { slot: "ps-dr5", name: "Dr. Borsos Gabriella", role: "fogszabályozó szakorvos", quals: "Fogszabályozás" },
+          { slot: "ps-dr6", name: "Dr Meszarics Réka", role: "fogorvos", quals: "Fogorvos" },
+          { slot: "ps-dr7", name: "Dr. Sipos Lili", role: "Paradontológus fogszakorvos", quals: "Parodontológia" },
+          { slot: "ps-dr8", name: "Kasza Margó", role: "Irodavezető", quals: "Iroda" },
+          { slot: "ps-dr9", name: "Szoták Marietta", role: "Vezető asszisztens", quals: "Asszisztencia" },
+          { slot: "ps-dr10", name: "Deme Johanna", role: "fogászati asszisztens", quals: "Asszisztencia" },
+          { slot: "ps-dr11", name: "Horváth Nicolas", role: "Recepciós", quals: "Recepció" },
+          { slot: "ps-dr12", name: "Soltész Nola Rea", role: "Recepciós", quals: "Recepció" }
+        ],
+        trFacts: [
+          { k: "Beavatkozás ideje", v: "Egyszerű esetben fél óra" },
+          { k: "Érzéstelenítés", v: "Teljes érzéstelenítés, igény esetén altatás" },
+          { k: "Rendszerek", v: "SGS-Dental, All on Four/Six, Branemark, Nobel Biocare" },
+          { k: "Garancia", v: "SGS implantátum: 5 év (anyagra)" }
+        ],
+        steps: [
+          { n: "01", title: "Ingyenes konzultáció", text: "Az ingyenes konzultáció alkalmával részletes felvilágosítást adunk az implantátumokról és a kezelés menetéről, valamint a beavatkozás utáni tudnivalókról." },
+          { n: "02", title: "Csontpótlás, ha szükséges", text: "A régen eltávolított vagy fogágybetegség miatt elveszített fogak helyén gyakran nem áll rendelkezésre elegendő csont. A hiányzó részt korszerű eljárásokkal pótolni lehet, és a hosszú távú stabil alátámasztás érdekében szükséges is." },
+          { n: "03", title: "Beültetés", text: "A beavatkozás fájdalommentesen, teljes érzéstelenítéssel vagy bizonyos esetekben akár altatással történik. A legegyszerűbb helyzetben fél óra alatt át is eshetünk rajta." },
+          { n: "04", title: "Gyógyulás és pótlás", text: "Az implantátumok a szükséges gyógyulási idő alatt tökéletesen beágyazódnak a csontba, és alkalmasak koronák, hidak, illetve protézisek biztonságos megtartására." }
+        ],
+        reviews: [
+          { initial: "S", who: "Szilvia Szuromi", meta: "Google-vélemény · 4 hónapja", quote: "Végre egy orvos, akivel lehet életmóddal kapcsatos tényezőkről beszélni! Balsai doki közvetlen, barátságos és kifejezetten informatív volt a szolgáltatása során, maximálisan elégedett vagyok. A rendelő szép, igazán kellemes miliővel." },
+          { initial: "I", who: "Ildikó Révai", meta: "Google-vélemény · egy éve", quote: "A legjobb fogorvosi rendelő! Hollywood smilet csináltattam náluk, Ádám doktor volt az orvosom. Mivel elég problémás páciens vagyok, altatásban történt az összes beavatkozás. A végeredmény annyira szép lett, hogy nem győzök gyönyörködni benne." },
+          { initial: "A", who: "Anna Jázmin Csukas", meta: "Google-vélemény · 4 hónapja", quote: "Csak ajánlani tudom. Bár előbb találtam volna rá erre a fogászatra." },
+          { initial: "S", who: "Sándor Saortay", meta: "Google-vélemény · egy éve", quote: "Pompás rendelő remek és mindig segítőkész orvosokkal, asszisztensekkel, munkatársakkal. Csak hálával tudok rájuk gondolni, sürgős esetekben is." },
+          { initial: "I", who: "Ildiko Ocsenas", meta: "Google-vélemény · 2 éve", quote: "Köszönöm a profi ellátást! Dr. Balsai Tamás 30 éve hűséges páciense vagyok, már a család többi tagja is a Perfect Smile rendelőbe jár. Margó kiválóan vezeti a kiszolgáló személyzetet és magasszínvonalú az ügyfélkezelése!" },
+          { initial: "S", who: "Sándor Szeberényi", meta: "Google-vélemény · egy éve", quote: "30 éve járok Balsai doktorhoz. Rengeteg ismerősömnek ajánlottam ezidő alatt a rendelőjét. Minden esetben a legjobb ellátást kaptuk. A holisztikus szemlélete sokat segít egyéb problémák feltárásában is." }
+        ],
+        values: [
+          { title: "Tömések: 2 év", text: "Garanciát vállalunk a töméseinkre, féléves kontroll mellett." },
+          { title: "Cirkónium korona: 3 év", text: "Fém-kerámia korona és kerámia héjak: 2 év, inlay: 2 év." },
+          { title: "SGS implantátum: 5 év", text: "Az implantátum anyagára, teljes és részleges fogsorra 1 év." }
+        ],
+        posts: [
+          { url: "https://drbalsai.hu/rendezveny/rocdumaroc/", cover: "./assets/blog-1.png", cat: "Rendezvény", date: "2024-10-14", title: "Őrült kihívást teljesített Dr. Balsai Tamás", excerpt: "A RocDuMaroc MTB versenyen Dr. Balsai Tamás 9 napon át, 6 szakaszon keresztül összesen 666Km-t teker le bicajjal – Most kezdem felfogni! Valami olyan érzés volt, mint amikor bekerülsz egy tornádóba és 6 napod van kijönni." },
+          { url: "https://drbalsai.hu/altatasos-fogaszat/gyakori-kerdesek-altatasos-fogaszat/", cover: "./assets/blog-2.png", cat: "Altatásos fogászat blog", date: "2024-03-11", title: "Gyakori kérdések az altatásos fogászat kapcsán", excerpt: "A mai fogászati technológiáknak és a folyamatosan fejlődő szakmai háttérnek köszönhetően minden esetben a fog megmentése az elsődleges cél. Mégis vannak olyan helyzetek, amikor muszáj az adott fogat vagy fogakat kihúzni." },
+          { url: "https://drbalsai.hu/fog-implantatum/fog-implantalas-utan/", cover: "./assets/blog-3.png", cat: "Fog implantátum blog", date: "2024-02-08", title: "Mire számíthatunk fog implantálás után?", excerpt: "Előző cikkünkben választ adtunk néhány gyakori kérdésre a fogászati implantálás kapcsán. Most ugyancsak egy olyan témakörről lesz szó, mely mindenki számára nagyon fontos, aki fog implantátumot szeretne behelyeztetni." },
+          { url: "https://drbalsai.hu/fog-implantatum/fogaszati-implantalas-kerdesek/", cover: "./assets/blog-4.png", cat: "Fog implantátum blog", date: "2023-12-11", title: "Fogászati implantálást övező kérdések", excerpt: "A fogászati implantátum egy stabil és egyben esztétikus megoldást kínál, amennyiben valakinek fogpótlásra van szüksége. Ráadásul olyan esetekben is segíthet, amikor más nem jöhetne szóba." },
+          { url: "https://drbalsai.hu/fog-implantatum/mutet-nelkuli-fog-implantalas/", cover: "./assets/blog-5.png", cat: "Fog implantátum blog", date: "2023-10-11", title: "Fog implantátum műtét nélkül", excerpt: "A Perfect Smile Fogászati Klinikában az úgynevezett flapless, vagyis műtét nélküli fog implantálás is régóta elérhető. Dr. Balsai Tamás minden olyan páciens esetén ezt a fajta beavatkozást ajánlja, akinél lehetséges." },
+          { url: "https://drbalsai.hu/fogaszati-hirek/perfect-smile-uj-muto-altatasos-fogaszat/", cover: "./assets/blog-6.png", cat: "Hírek", date: "2023-08-24", title: "A Perfect Smile Fogászati Klinika új műtővel bővült", excerpt: "Nemrég megnyitotta új műtőjét a Perfect Smile Fogászati Klinika, ahol az altatásos beavatkozások különlegesen komfortos teret nyertek. A bővítés keretein belül a műtőhöz saját szoba, illetve fürdőszoba tartozik." },
+          { url: "https://drbalsai.hu/fogaszati-hirek/bator-mosoly-onbizalom/", cover: "./assets/blog-7.png", cat: "Hírek", date: "2023-07-17", title: "Bátor mosoly nélkül nincs önbizalom", excerpt: "Elérkeztünk a mostanában mindig emlegetett webináriumhoz köthető utolsó témánkhoz. Ezen cikksorozatunk befejező részében ismét egy nagyon fontos és sokakat érintő problémáról lesz szó, méghozzá az önbizalom hiányáról." },
+          { url: "https://drbalsai.hu/fogaszati-hirek/cirkadian-ritmus-fogaszati-problemak/", cover: "./assets/blog-8.png", cat: "Hírek", date: "2023-06-20", title: "A fogászati problémák időszakosan váltakozhatnak", excerpt: "Dr. Balsai Tamás nem csak azért kitűnő fogorvos, mert jól végzi a munkáját, hanem azért is, mert kicsit másképp látja azokat az összefüggéseket, melyekre más talán nem is gondolna." },
+          { url: "https://drbalsai.hu/gyermekfogaszat/gyermek-fogmosas/", cover: "./assets/blog-9.png", cat: "Gyermekfogászat blog", date: "2023-05-23", title: "Gyerekek és a fogmosás", excerpt: "Talán az alcím még helyesebb lenne, ha így tennénk fel a kérdést: hogyan tanítsuk meg gyermekünket és magunkat is helyesen fogat mosni?" }
+        ],
+        podcasts: [
+          { title: "A böjt, ami Nobel-díjat kapott – és Neked is meg fogja változtatni a testedet", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#7A1220" },
+          { title: "Így lett az ünnepi kenyérből mindennapi méreg", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#7A1220" },
+          { title: "Ezért betegszik meg a fél ország, és mégis kevesen értik, miért", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#7A1220" },
+          { title: "A böjt, ami félmillió embert ébresztett fel", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#7A1220" },
+          { title: "„Imádok személyesen találkozni azokkal, akik hallgatják a podcastot”", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#1A1613" },
+          { title: "Öt nap evés nélkül, és minden megváltozik", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#1A1613" },
+          { title: "„Arcon vágott a diagnózis: tüdőbeteg vagyok”", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#1A1613" },
+          { title: "„Nem szégyellem, igen elsírtam magam!”", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#1A1613" }
+        ],
+        tech: [
+          { tag: "CT", text: "CBCT felvétel helyben, így ritkán kell máshová küldenünk." },
+          { tag: "MIK", text: "Gyökérkezelés sebészi mikroszkóppal." },
+          { tag: "PRF", text: "A-PRF és I-PRF: csont és membrán a páciens saját véréből." },
+          { tag: "ALT", text: "Altatásos háttér aneszteziológussal a félős pácienseknek." }
+        ],
+        awards: [
+          { name: "CBCT helyben", year: "3D felvétel, 20.000 Ft" },
+          { name: "Mikroszkópos endodoncia", year: "2016 óta" },
+          { name: "A-PRF és I-PRF", year: "Csont saját vérből" },
+          { name: "Írásos garancia", year: "Minden pótlásra" },
+          { name: "Altatásos háttér", year: "Aneszteziológussal" }
+        ],
+        priceGroups: [
+          { title: "Röntgen és konzultáció", rows: [
+            { name: "Fogászati CT felvétel (CBCT)", price: "20.000 Ft" },
+            { name: "Panoráma röntgen", price: "5.000 Ft" },
+            { name: "Fogszabályozás konzultáció, első alkalom", price: "10.000 Ft" },
+            { name: "Fogszabályozás kezelési terv", price: "30.000 Ft" }
+          ] },
+          { title: "Konzerváló fogászat", rows: [
+            { name: "Fogkőeltávolítás", price: "25.000 Ft" },
+            { name: "Esztétikus tömés", price: "30.000 Ft" },
+            { name: "Esztétikus tömés, több felszínű", price: "40.000 Ft" },
+            { name: "Fogfehérítés", price: "80.000 Ft" },
+            { name: "Homokfúvás", price: "10.000 Ft" },
+            { name: "Gyökértömés", price: "60.000 – 75.000 Ft" },
+            { name: "Mikroszkópos gyökérkezelés", price: "75.000 – 120.000 Ft" }
+          ] },
+          { title: "Fogpótlás", rows: [
+            { name: "Porcelán inlay / onlay", price: "100.000 Ft" },
+            { name: "Porcelán héj", price: "120.000 Ft" },
+            { name: "E-max korona, héj", price: "120.000 Ft" },
+            { name: "Fém-kerámia korona", price: "100.000 Ft" },
+            { name: "Cirkon korona", price: "120.000 Ft" },
+            { name: "Teljes fogsor, állcsontonként", price: "150.000 Ft" }
+          ] },
+          { title: "Szájsebészet és implantátum", rows: [
+            { name: "Foghúzás", price: "20.000 Ft" },
+            { name: "Bölcsességfog operálás", price: "60.000 Ft" },
+            { name: "A-PRF membrán saját vérből", price: "150.000 Ft" },
+            { name: "SGS-Dental implantátum", price: "170.000 Ft" },
+            { name: "All-on-4 / six implantátum", price: "220.000 Ft" },
+            { name: "Branemark implantátum", price: "250.000 Ft" },
+            { name: "Sinus lifting", price: "200.000 Ft" },
+            { name: "Altatás", price: "200.000 Ft" }
+          ] },
+          { title: "Fogszabályozás", rows: [
+            { name: "Rögzített készülék, fém, állcsontonként", price: "300.000 Ft" },
+            { name: "Rögzített készülék, esztétikus, állcsontonként", price: "350.000 Ft" },
+            { name: "Egyszerű lemez", price: "60.000 Ft" },
+            { name: "Trainer", price: "50.000 Ft" },
+            { name: "Invisalign", price: "1.100.000 – 1.500.000 Ft" },
+            { name: "Éjszakai harapásemelő sín", price: "25.000 Ft" }
+          ] }
+        ]
+      },
+      en: {
+        rooms: [
+          { src: "./assets/room-entrance.png", title: "You step in from Fő utca", text: "The practice is at Fő utca 71 in Budapest's second district." },
+          { src: "./assets/room-lounge.png", title: "The waiting lounge", text: "A refined, reassuring setting with friendly, welcoming staff." },
+          { src: "./assets/room-surgery-1.png", title: "Treatment room", text: "One of the most beautiful and modern practices in Budapest, fitted with innovative equipment." },
+          { src: "./assets/room-surgery-2.png", title: "Oral surgery room", text: "The innovative instruments our oral surgeons work with." }
+        ],
+        services: [
+          { num: "01", name: "Scaling", desc: "Scaling is one of the most important treatments: it keeps oral hygiene in order and prevents dental problems from developing.", price: "25.000 Ft" },
+          { num: "02", name: "Fillings", desc: "Cavities form for many reasons, and they are not only an aesthetic nuisance — they can cause considerable pain.", price: "30.000 Ft" },
+          { num: "03", name: "Whitening", desc: "We work with the most modern technology available, reaching a shade 4–5 steps lighter in under an hour.", price: "80.000 Ft" },
+          { num: "04", name: "Prosthetics", desc: "Porcelain and zirconia crowns, bridges, inlays and onlays — living with an incomplete dentition carries several disadvantages.", price: "100.000 Ft" },
+          { num: "05", name: "Dental implants", desc: "Implants integrate fully into the bone during healing and hold crowns, bridges and dentures securely.", price: "170.000 Ft" },
+          { num: "06", name: "Oral surgery", desc: "Our oral surgeons use innovative instruments for wisdom tooth removal, apicoectomy, cyst removal and complex extractions.", price: "20.000 Ft" }
+        ],
+        extra: [
+          { num: "07", name: "Root canal treatment", desc: "Disinfecting and treating the nerve inside a damaged tooth so it does not deteriorate under the crown or filling.", price: "75.000 Ft" },
+          { num: "08", name: "Periodontology", desc: "Treatment of gum disease and receding gums — bacterial inflammation of the tissues surrounding the tooth.", price: "100.000 Ft" },
+          { num: "09", name: "Dental CT", desc: "CBCT makes complex problems treatable and procedures far easier to plan, lowering the risk factor overall.", price: "20.000 Ft" },
+          { num: "10", name: "Orthodontics", desc: "Our aim is a more even arch and a better bite, always accounting for individual anatomy.", price: "300.000 Ft" },
+          { num: "11", name: "Sedation dentistry", desc: "We recommend treatment under sedation primarily for surgery and oral surgical procedures.", price: "200.000 Ft" },
+          { num: "12", name: "Children", desc: "It is a common misconception that milk teeth need less attention than permanent ones.", price: "10.000 Ft" }
+        ],
+        aboutFacts: [
+          { n: "30", label: "years with Dr. Balsai Tamás at the head of the practice" },
+          { n: "20+", label: "years of professional history on Fő utca" },
+          { n: "thousands", label: "of satisfied patients" },
+          { n: "12", label: "dentists, assistants and staff" }
+        ],
+        gallery: [
+          { src: "./assets/hero-reception.png", cap: "Reception at Fő utca 71" },
+          { src: "./assets/room-entrance.png", cap: "Entrance" },
+          { src: "./assets/room-lounge.png", cap: "Waiting lounge" },
+          { src: "./assets/room-surgery-1.png", cap: "Treatment room" },
+          { src: "./assets/room-surgery-2.png", cap: "Oral surgery room" }
+        ],
+        teamGroups: [
+          { title: "Management", people: [
+            { photo: "./assets/team-balsai.png", name: "Dr. Balsai Tamás", role: "Director, dental specialist, implantologist" },
+            { photo: "./assets/team-kasza.png", name: "Kasza Margó", role: "Office manager" }
+          ] },
+          { title: "Dentists", people: [
+            { photo: "./assets/team-hulik.png", name: "Dr. Hulik Emese", role: "periodontology specialist" },
+            { photo: "./assets/team-csernak.png", name: "Dr. Csernák Ádám", role: "dental specialist" },
+            { photo: "./assets/team-varga.png", name: "Dr. Varga Márton", role: "dentist" },
+            { photo: "./assets/team-borsos.png", name: "Dr. Borsos Gabriella", role: "orthodontic specialist" },
+            { photo: "./assets/team-meszarics.png", name: "Dr Meszarics Réka", role: "dentist" }
+          ] },
+          { title: "Assistants", people: [
+            { photo: "./assets/team-szotak.png", name: "Szoták Marietta", role: "Lead dental assistant" },
+            { photo: "./assets/team-deme.png", name: "Deme Johanna", role: "dental assistant" },
+            { photo: "./assets/team-brosko.png", name: "Broskó Nikolett", role: "dental assistant" }
+          ] },
+          { title: "Reception", people: [
+            { photo: "./assets/team-horvath.png", name: "Horváth Nicolas", role: "Receptionist" },
+            { photo: "./assets/team-soltesz.png", name: "Soltész Nola Rea", role: "Receptionist" }
+          ] }
+        ],
+        team: [
+          { slot: "ps-dr1", name: "Dr. Balsai Tamás", role: "Director, dental specialist, implantologist", quals: "Implantology" },
+          { slot: "ps-dr2", name: "Dr. Hulik Emese", role: "Periodontology specialist", quals: "Periodontology" },
+          { slot: "ps-dr3", name: "Dr. Csernák Ádám", role: "Dental specialist", quals: "Dental specialist" },
+          { slot: "ps-dr4", name: "Dr. Varga Márton", role: "Dentist", quals: "Dentist" },
+          { slot: "ps-dr5", name: "Dr. Borsos Gabriella", role: "Orthodontic specialist", quals: "Orthodontics" },
+          { slot: "ps-dr6", name: "Dr Meszarics Réka", role: "Dentist", quals: "Dentist" },
+          { slot: "ps-dr7", name: "Dr. Sipos Lili", role: "Periodontology specialist", quals: "Periodontology" },
+          { slot: "ps-dr8", name: "Kasza Margó", role: "Office manager", quals: "Office" },
+          { slot: "ps-dr9", name: "Szoták Marietta", role: "Lead dental assistant", quals: "Assistant team" },
+          { slot: "ps-dr10", name: "Deme Johanna", role: "Dental assistant", quals: "Assistant team" },
+          { slot: "ps-dr11", name: "Horváth Nicolas", role: "Receptionist", quals: "Reception" },
+          { slot: "ps-dr12", name: "Soltész Nola Rea", role: "Receptionist", quals: "Reception" }
+        ],
+        trFacts: [
+          { k: "Procedure time", v: "Half an hour in simple cases" },
+          { k: "Anaesthetic", v: "Full local anaesthetic, sedation on request" },
+          { k: "Systems", v: "SGS-Dental, All on Four/Six, Branemark, Nobel Biocare" },
+          { k: "Guarantee", v: "SGS implant: 5 years on the material" }
+        ],
+        steps: [
+          { n: "01", title: "Free consultation", text: "At the free consultation we explain the implants, the course of treatment and what to expect afterwards in detail." },
+          { n: "02", title: "Bone grafting where needed", text: "Where a tooth was removed long ago or lost to gum disease, there is often not enough bone for the implant. Modern procedures can replace what is missing, and it is necessary for long-term stable support." },
+          { n: "03", title: "Placement", text: "The procedure is painless, under full local anaesthetic or, in certain cases, under sedation. In the simplest situation it can be over within half an hour." },
+          { n: "04", title: "Healing and restoration", text: "During the healing period implants integrate perfectly into the bone and are able to hold crowns, bridges and dentures securely." }
+        ],
+        reviews: [
+          { initial: "S", who: "Szilvia Szuromi", meta: "Google review · 4 months ago", quote: "Finally a doctor I can talk to about lifestyle factors! Dr. Balsai was direct, friendly and genuinely informative — I'm fully satisfied. The practice is beautiful, with a really pleasant atmosphere." },
+          { initial: "I", who: "Ildikó Révai", meta: "Google review · a year ago", quote: "The best dental practice! I had a Hollywood smile done, Dr. Ádám was my dentist. As I'm a fairly difficult patient, every procedure was done under sedation. The result turned out so beautiful I can't stop admiring it." },
+          { initial: "A", who: "Anna Jázmin Csukas", meta: "Google review · 4 months ago", quote: "I can only recommend it. I just wish I'd found this practice sooner." },
+          { initial: "S", who: "Sándor Saortay", meta: "Google review · a year ago", quote: "A wonderful practice with great, always helpful doctors, assistants and staff. I can only be grateful to them, even in urgent cases." },
+          { initial: "I", who: "Ildiko Ocsenas", meta: "Google review · 2 years ago", quote: "Thank you for the professional care! I've been a loyal patient of Dr. Balsai Tamás for 30 years, and the rest of my family now comes to Perfect Smile too. Margó runs the front-of-house team excellently, with a very high standard of service." },
+          { initial: "S", who: "Sándor Szeberényi", meta: "Google review · a year ago", quote: "I've been going to Dr. Balsai for 30 years and have recommended his practice to many friends over that time. We always received the best care. His holistic approach also helps uncover other problems." }
+        ],
+        values: [
+          { title: "Fillings: 2 years", text: "Guaranteed, provided you attend the six-monthly check-up." },
+          { title: "Zirconia crown: 3 years", text: "Metal-ceramic crowns and ceramic veneers: 2 years, inlays: 2 years." },
+          { title: "SGS implant: 5 years", text: "On the implant material; full and partial dentures: 1 year." }
+        ],
+        posts: [
+          { url: "https://drbalsai.hu/rendezveny/rocdumaroc/", cover: "./assets/blog-1.png", cat: "Events", date: "2024-10-14", title: "Dr. Balsai Tamás completed an extreme challenge", excerpt: "At the RocDuMaroc MTB race Dr. Balsai Tamás rode 666 km over six stages in nine days. \"It's only sinking in now — it felt like being pulled into a tornado with six days to get out.\"" },
+          { url: "https://drbalsai.hu/altatasos-fogaszat/gyakori-kerdesek-altatasos-fogaszat/", cover: "./assets/blog-2.png", cat: "Sedation blog", date: "2024-03-11", title: "Common questions about sedation dentistry", excerpt: "Thanks to today's dental technology and a constantly developing professional background, saving the tooth is always the first goal. Yet there are situations where a tooth has to be removed." },
+          { url: "https://drbalsai.hu/fog-implantatum/fog-implantalas-utan/", cover: "./assets/blog-3.png", cat: "Implant blog", date: "2024-02-08", title: "What to expect after implant placement", excerpt: "In our previous article we answered common questions about implant placement. This time the subject matters to everyone considering an implant: how the wound heals." },
+          { url: "https://drbalsai.hu/fog-implantatum/fogaszati-implantalas-kerdesek/", cover: "./assets/blog-4.png", cat: "Implant blog", date: "2023-12-11", title: "Questions surrounding dental implants", excerpt: "An implant offers a stable and aesthetic solution when a tooth needs replacing. It can also help in cases where nothing else would be an option." },
+          { url: "https://drbalsai.hu/fog-implantatum/mutet-nelkuli-fog-implantalas/", cover: "./assets/blog-5.png", cat: "Implant blog", date: "2023-10-11", title: "Implant placement without surgery", excerpt: "Flapless — that is, surgery-free — implant placement has long been available at the Perfect Smile clinic. Dr. Balsai Tamás recommends it for every patient where it is possible." },
+          { url: "https://drbalsai.hu/fogaszati-hirek/perfect-smile-uj-muto-altatasos-fogaszat/", cover: "./assets/blog-6.png", cat: "News", date: "2023-08-24", title: "Perfect Smile has opened a new operating room", excerpt: "The Perfect Smile clinic recently opened its new operating room, giving treatments under sedation a particularly comfortable setting, with its own room and bathroom." },
+          { url: "https://drbalsai.hu/fogaszati-hirek/bator-mosoly-onbizalom/", cover: "./assets/blog-7.png", cat: "News", date: "2023-07-17", title: "Without a confident smile there is no self-confidence", excerpt: "We have reached the last topic tied to the webinar we keep mentioning. This closing part of the series is about another important, widely shared problem: a lack of self-confidence." },
+          { url: "https://drbalsai.hu/fogaszati-hirek/cirkadian-ritmus-fogaszati-problemak/", cover: "./assets/blog-8.png", cat: "News", date: "2023-06-20", title: "Dental problems can come and go in phases", excerpt: "Dr. Balsai Tamás is an excellent dentist not only because he does his work well, but because he sees connections a little differently than others might." },
+          { url: "https://drbalsai.hu/gyermekfogaszat/gyermek-fogmosas/", cover: "./assets/blog-9.png", cat: "Children's blog", date: "2023-05-23", title: "Children and brushing teeth", excerpt: "Perhaps the subtitle would be more accurate as a question: how do we teach our children — and ourselves — to brush properly?" }
+        ],
+        podcasts: [
+          { title: "The fast that won a Nobel Prize — and will change your body too", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#7A1220" },
+          { title: "How festive bread became an everyday poison", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#7A1220" },
+          { title: "Why half the country falls ill, and so few understand why", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#7A1220" },
+          { title: "The fast that woke up half a million people", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#7A1220" },
+          { title: "\u201cI love meeting the people who listen to the podcast in person\u201d", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#1A1613" },
+          { title: "Five days without food, and everything changes", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#1A1613" },
+          { title: "\u201cThe diagnosis hit me in the face: I have a lung disease\u201d", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#1A1613" },
+          { title: "\u201cI'm not ashamed — yes, I cried\u201d", source: "Spotify · #balsaidoki", url: "https://open.spotify.com/show/7abizCjzwKncZAB4FozbCj", bg: "#1A1613" }
+        ],
+        tech: [
+          { tag: "CT", text: "CBCT scanning on site, so imaging referrals are rare." },
+          { tag: "MIC", text: "Root canal treatment performed under a surgical microscope." },
+          { tag: "PRF", text: "A-PRF and I-PRF: bone and membrane grown from your own blood." },
+          { tag: "GA", text: "A sedation suite with an anaesthetist for anxious patients." }
+        ],
+        awards: [
+          { name: "CBCT on site", year: "3D imaging, 20.000 Ft" },
+          { name: "Microscope endodontics", year: "Since 2016" },
+          { name: "A-PRF & I-PRF", year: "Bone from your own blood" },
+          { name: "Written guarantee", year: "On every restoration" },
+          { name: "Sedation suite", year: "Anaesthetist on call" }
+        ],
+        priceGroups: [
+          { title: "Imaging & consultation", rows: [
+            { name: "Dental CT scan (CBCT)", price: "20.000 Ft" },
+            { name: "Panoramic X-ray", price: "5.000 Ft" },
+            { name: "Orthodontic consultation, first visit", price: "10.000 Ft" },
+            { name: "Orthodontic treatment plan", price: "30.000 Ft" }
+          ] },
+          { title: "Conservative dentistry", rows: [
+            { name: "Scaling", price: "25.000 Ft" },
+            { name: "Aesthetic filling", price: "30.000 Ft" },
+            { name: "Aesthetic filling, multiple surfaces", price: "40.000 Ft" },
+            { name: "Teeth whitening", price: "80.000 Ft" },
+            { name: "Airflow", price: "10.000 Ft" },
+            { name: "Root canal filling", price: "60.000 – 75.000 Ft" },
+            { name: "Microscope root canal treatment", price: "75.000 – 120.000 Ft" }
+          ] },
+          { title: "Prosthetics", rows: [
+            { name: "Porcelain inlay / onlay", price: "100.000 Ft" },
+            { name: "Porcelain veneer", price: "120.000 Ft" },
+            { name: "E-max crown or veneer", price: "120.000 Ft" },
+            { name: "Metal-ceramic crown", price: "100.000 Ft" },
+            { name: "Zirconia crown", price: "120.000 Ft" },
+            { name: "Full denture, per jaw", price: "150.000 Ft" }
+          ] },
+          { title: "Oral surgery & implants", rows: [
+            { name: "Extraction", price: "20.000 Ft" },
+            { name: "Wisdom tooth surgery", price: "60.000 Ft" },
+            { name: "A-PRF membrane from own blood", price: "150.000 Ft" },
+            { name: "SGS-Dental implant", price: "170.000 Ft" },
+            { name: "All-on-4 / six implant", price: "220.000 Ft" },
+            { name: "Branemark implant", price: "250.000 Ft" },
+            { name: "Sinus lifting", price: "200.000 Ft" },
+            { name: "General anaesthetic", price: "200.000 Ft" }
+          ] },
+          { title: "Orthodontics", rows: [
+            { name: "Fixed appliance, metal, per jaw", price: "300.000 Ft" },
+            { name: "Fixed appliance, aesthetic, per jaw", price: "350.000 Ft" },
+            { name: "Simple removable plate", price: "60.000 Ft" },
+            { name: "Trainer", price: "50.000 Ft" },
+            { name: "Invisalign", price: "1.100.000 – 1.500.000 Ft" },
+            { name: "Night bite-raising splint", price: "25.000 Ft" }
+          ] }
+        ]
+      }
+    };
+    const L = hu ? "hu" : "en";
+    const d = D[L];
+    return {
+      t: T[L],
+      langLabel: hu ? "EN" : "HU",
+      toggleLang: (e) => { if (e) e.preventDefault(); this.setState({ lang: hu ? "en" : "hu" }); },
+      isHome: p === "home", isServices: p === "services", isTreatment: p === "treatment",
+      isTeam: p === "team", isPrices: p === "prices", isReviews: p === "reviews",
+      isAbout: p === "about", isBlog: p === "blog", isContact: p === "contact", isBook: p === "book",
+      goHome: this.go("home"), goServices: this.go("services"), goTreatment: this.go("treatment"),
+      goTeam: this.go("team"), goPrices: this.go("prices"), goReviews: this.go("reviews"),
+      goAbout: this.go("about"), goBlog: this.go("blog"), goContact: this.go("contact"), goBook: this.go("book"),
+      headerBg: (p === "home" && !this.state.scrolled)
+        ? "linear-gradient(to bottom, rgba(26,22,19,.72), rgba(26,22,19,0))"
+        : "rgba(20,17,16,.94)",
+      tourRef: this.tourRef,
+      rooms: d.rooms,
+      services: d.services,
+      allServices: d.services.concat(d.extra),
+      team: d.team.slice(0, 3),
+      fullTeam: d.team,
+      teamGroups: d.teamGroups,
+      gallery: d.gallery,
+      aboutFacts: d.aboutFacts,
+      trFacts: d.trFacts,
+      tech: d.tech,
+      awards: d.awards,
+      steps: d.steps,
+      priceGroups: d.priceGroups,
+      reviews: d.reviews,
+      values: d.values,
+      posts: d.posts,
+      podcasts: d.podcasts,
+      chatScrollRef: this.chatScrollRef,
+      chatOpen: this.state.chatOpen,
+      chatClosed: !this.state.chatOpen,
+      chatIcon: this.state.chatOpen ? "×" : "✳",
+      chatInput: this.state.chatInput,
+      toggleChat: (e) => { if (e) e.preventDefault(); this.setState({ chatOpen: !this.state.chatOpen }); },
+      onChatInput: (e) => this.setState({ chatInput: e.target.value }),
+      onChatKey: (e) => { if (e.key === "Enter") { e.preventDefault(); this.pushChat(this.state.chatInput); } },
+      sendChat: (e) => { if (e) e.preventDefault(); this.pushChat(this.state.chatInput); },
+      chatChips: (hu
+        ? ["Milyen érzéstelenítési lehetőségek vannak?", "What should I do in case of a dental emergency?"]
+        : ["What anaesthetic options do you offer?", "What should I do in case of a dental emergency?"]
+      ).map((label) => ({ label, pick: (e) => { if (e) e.preventDefault(); this.pushChat(label); } })),
+      chatMsgs: [{ who: "bot", text: T[L].chatGreeting }].concat(this.state.chat).map((m) => ({
+        text: m.text,
+        align: m.who === "me" ? "flex-end" : "flex-start",
+        bg: m.who === "me" ? "#1A1613" : "#EFE7D8",
+        fg: m.who === "me" ? "#FBF8F2" : "#1A1613"
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

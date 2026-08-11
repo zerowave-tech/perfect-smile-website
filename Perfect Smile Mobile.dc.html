@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&amp;display=swap" rel="stylesheet">
+<script src="./ps-data.js"></script>
+<style>
+  html { scroll-behavior: smooth; color-scheme: light; }
+  html, body { margin: 0; padding: 0; background: #E9E0D1; }
+  body { font-family: "DM Sans", system-ui, sans-serif; color: #1A1613; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #1A1613; text-decoration: none; }
+  a:hover { color: #B98A00; }
+  [data-noscroll]::-webkit-scrollbar { display: none; }
+</style>
+</helmet>
+
+<div style="width:100%;max-width:100%;overflow-x:clip;padding-bottom:74px">
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:{{ headerBg }};backdrop-filter:blur(8px)">
+  <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:10px;color:#fff;min-width:0">
+    <span style="display:block;width:30px;height:30px;flex:none;border-radius:8px;background:linear-gradient(160deg,#FFD24A,#F0A800);position:relative;overflow:hidden">
+      <span style="position:absolute;left:14%;right:14%;top:36%;height:34%;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:3px solid #fff"></span>
+    </span>
+    <span style="display:flex;flex-direction:column;line-height:1;min-width:0">
+      <span style="font-family:'Instrument Serif',serif;font-size:19px">Perfect Smile</span>
+      <span style="font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.7;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.brandSub }}</span>
+    </span>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px;flex:none">
+    <a href="tel:+3612124272" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(255,255,255,.28);color:#fff;font-size:16px">☏</a>
+    <a href="#" onClick="{{ openMenu }}" aria-label="Menu" style="width:44px;height:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border-radius:50%;background:#F5B301">
+      <span style="display:block;width:17px;height:1.6px;background:#1A1613"></span>
+      <span style="display:block;width:17px;height:1.6px;background:#1A1613"></span>
+      <span style="display:block;width:11px;height:1.6px;background:#1A1613"></span>
+    </a>
+  </div>
+</header>
+
+<sc-if value="{{ menuOpen }}">
+<div style="position:fixed;inset:0;z-index:70;background:#141110;display:flex;flex-direction:column;padding:14px 22px 28px">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <span style="font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:#F5B301">Menü</span>
+    <a href="#" onClick="{{ closeMenu }}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px">×</a>
+  </div>
+  <nav style="display:flex;flex-direction:column;gap:2px;margin-top:22px">
+    <a href="#" onClick="{{ goServices }}" style="font-family:'Instrument Serif',serif;font-size:31px;color:#fff;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)">{{ t.navTreat }}</a>
+    <a href="#" onClick="{{ goTeam }}" style="font-family:'Instrument Serif',serif;font-size:31px;color:#fff;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)">{{ t.navTeam }}</a>
+    <a href="#" onClick="{{ goPrices }}" style="font-family:'Instrument Serif',serif;font-size:31px;color:#fff;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)">{{ t.navFees }}</a>
+    <a href="#" onClick="{{ goAbout }}" style="font-family:'Instrument Serif',serif;font-size:31px;color:#fff;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)">{{ t.navAbout }}</a>
+    <a href="#" onClick="{{ goBlog }}" style="font-family:'Instrument Serif',serif;font-size:31px;color:#fff;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)">{{ t.navJournal }}</a>
+    <a href="#" onClick="{{ goContact }}" style="font-family:'Instrument Serif',serif;font-size:31px;color:#fff;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)">{{ t.navContact }}</a>
+  </nav>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:14px">
+    <a href="#" onClick="{{ goBook }}" style="display:block;text-align:center;padding:17px;border-radius:999px;background:#F5B301;color:#1A1613;font-size:15px;font-weight:500">{{ t.cta }}</a>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <a href="tel:+3612124272" style="color:rgba(255,255,255,.72);font-size:14px">+36 1 212 4272</a>
+      <a href="#" onClick="{{ toggleLang }}" style="color:#fff;font-size:12px;letter-spacing:.16em;border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:9px 14px">{{ langLabel }}</a>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<main data-screen-label="Mobile / home">
+  <section style="position:relative;min-height:92svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden">
+    <img src="./assets/hero-reception.png" alt="Perfect Smile" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:42% 55%">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,22,19,.62) 0%,rgba(26,22,19,.42) 35%,rgba(26,22,19,.94) 100%)"></div>
+    <div style="position:relative;padding:0 20px 40px">
+      <span style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#F5B301">Budapest II. · Fő utca 71.</span>
+      <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:42px;line-height:1.02;color:#fff;margin:14px 0 0;text-wrap:balance">{{ t.heroTitle }}</h1>
+      <p style="font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.78);margin:16px 0 0">{{ t.heroText }}</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:26px">
+        <a href="#" onClick="{{ goBook }}" style="display:block;text-align:center;padding:17px;border-radius:999px;background:#F5B301;color:#1A1613;font-size:15px;font-weight:500">{{ t.cta }}</a>
+        <a href="#" onClick="{{ goServices }}" style="display:block;text-align:center;padding:17px;border-radius:999px;border:1px solid rgba(255,255,255,.4);color:#fff;font-size:15px">{{ t.heroCta2 }}</a>
+      </div>
+    </div>
+  </section>
+
+  <section ref="{{ tourRef }}" style="position:relative;height:420svh;background:#1A1613">
+    <div style="position:sticky;top:0;height:100svh;overflow:hidden">
+      <sc-for list="{{ rooms }}" as="r" hint-placeholder-count="4">
+        <div data-room="{{ $index }}" style="position:absolute;inset:0;opacity:0;will-change:opacity,transform">
+          <img data-src="{{ r.src }}" alt="{{ r.title }}" style="width:100%;height:100%;object-fit:cover;display:block">
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,22,19,.5) 0%,rgba(26,22,19,.28) 40%,rgba(26,22,19,.94) 100%)"></div>
+        </div>
+      </sc-for>
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 20px 96px">
+        <span style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#F5B301">{{ t.tourEyebrow }}</span>
+        <div style="position:relative;min-height:200px;margin-top:14px">
+          <sc-for list="{{ rooms }}" as="r" hint-placeholder-count="4">
+            <div data-caption="{{ $index }}" style="position:absolute;left:0;right:0;top:0;opacity:0;will-change:opacity,transform">
+              <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:32px;line-height:1.06;color:#fff;margin:0">{{ r.title }}</h2>
+              <p style="font-size:15px;line-height:1.6;color:rgba(255,255,255,.75);margin:12px 0 0">{{ r.text }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="position:absolute;right:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ rooms }}" as="r" hint-placeholder-count="4">
+          <span data-dot="{{ $index }}" style="display:block;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .3s,transform .3s"></span>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#E9E0D1;padding:52px 0">
+    <div style="padding:0 20px">
+      <span style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#B98A00">{{ t.reviewsEyebrow }}</span>
+      <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:32px;line-height:1.08;margin:12px 0 10px">{{ t.reviewsTitle }}</h2>
+      <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;opacity:.65;margin-bottom:24px">
+        <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h11.9c-.5 2.8-2.1 5.1-4.4 6.7v5.6h7.1c4.2-3.9 6.5-9.6 6.5-16.8z"></path><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.6-5.3l-7.1-5.6c-2 1.3-4.5 2.1-7.5 2.1-5.8 0-10.7-3.9-12.5-9.2H4.1v5.8C7.9 41.1 15.3 46 24 46z"></path><path fill="#FBBC05" d="M11.5 27.9c-.4-1.3-.7-2.6-.7-4s.3-2.7.7-4v-5.8H4.1C2.7 16.9 2 20.3 2 24s.7 7.1 2.1 9.8l7.4-5.9z"></path><path fill="#EA4335" d="M24 10.9c3.2 0 6 1.1 8.2 3.2l6.3-6.3C34.9 4.2 29.9 2 24 2 15.3 2 7.9 6.9 4.1 14.2l7.4 5.8c1.8-5.3 6.7-9.1 12.5-9.1z"></path></svg>
+        {{ t.reviewsStat }}
+      </div>
+    </div>
+    <div data-noscroll="1" style="display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding:0 20px 6px">
+      <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="6">
+        <div style="flex:0 0 auto;width:calc(100vw - 72px);scroll-snap-align:center;background:#fff;border:1px solid rgba(26,22,19,.1);border-radius:10px;padding:22px 20px">
+          <div style="display:flex;align-items:center;gap:11px;margin-bottom:14px">
+            <div style="width:36px;height:36px;flex:none;border-radius:50%;background:#F5B301;display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:17px">{{ r.initial }}</div>
+            <div style="min-width:0">
+              <div style="font-size:13.5px;font-weight:600">{{ r.who }}</div>
+              <div style="font-size:11.5px;color:rgba(26,22,19,.5)">{{ r.meta }}</div>
+            </div>
+          </div>
+          <div style="color:#F5B301;font-size:13px;letter-spacing:2px;margin-bottom:10px">★★★★★</div>
+          <p style="font-size:14.5px;line-height:1.55;margin:0">{{ r.quote }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="background:#1A1613;color:#fff;padding:52px 20px 56px">
+    <span style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#F5B301">{{ t.bookingEyebrow }}</span>
+    <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:32px;line-height:1.08;margin:12px 0 16px">{{ t.callbackTitle }}</h2>
+    <p style="font-size:15px;line-height:1.65;color:rgba(255,255,255,.7);margin:0 0 22px">{{ t.callbackText }} <a href="tel:+3612124272" style="color:#F5B301">+36 1 212 4272</a>.</p>
+    <div style="display:grid;gap:14px">
+      <input placeholder="{{ t.fFull }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+      <input placeholder="{{ t.fPhone }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+      <input placeholder="{{ t.fTreat }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+      <input placeholder="{{ t.fTime }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+      <button style="margin-top:10px;padding:18px;border:0;border-radius:999px;background:#F5B301;color:#1A1613;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif">{{ t.cta }}</button>
+      <div style="font-size:12px;line-height:1.6;color:rgba(255,255,255,.45)">{{ t.privacyNote }}</div>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isServices }}">
+<main data-screen-label="Mobile / services" style="background:#E9E0D1;padding:88px 0 56px;background-image:linear-gradient(180deg,rgba(26,22,19,.16) 0,rgba(26,22,19,0) 220px)">
+  <div style="padding:0 20px 34px">
+    <span style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#B98A00">{{ t.navTreat }}</span>
+    <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:38px;line-height:1.04;margin:12px 0 14px">{{ t.servTitle }}</h1>
+    <p style="font-size:15.5px;line-height:1.65;opacity:.7;margin:0">{{ t.servText }}</p>
+  </div>
+  <div style="display:grid;gap:1px;background:rgba(26,22,19,.14)">
+    <sc-for list="{{ allServices }}" as="s" hint-placeholder-count="12">
+      <a href="#" onClick="{{ goTreatment }}" style="display:block;background:#F4EEE2;padding:22px 20px">
+        <div style="display:flex;align-items:baseline;gap:12px">
+          <span style="font-family:'Instrument Serif',serif;color:#B98A00;font-size:13px;flex:none">{{ s.num }}</span>
+          <span style="font-family:'Instrument Serif',serif;font-size:24px;line-height:1.12;flex:1">{{ s.name }}</span>
+          <span style="font-size:12px;letter-spacing:.06em;opacity:.6;white-space:nowrap;flex:none">{{ s.price }}</span>
+        </div>
+        <p style="font-size:14px;line-height:1.6;opacity:.66;margin:10px 0 0;padding-left:26px">{{ s.desc }}</p>
+      </a>
+    </sc-for>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isTreatment }}">
+<main data-screen-label="Mobile / treatment" style="background:#E9E0D1">
+  <section style="position:relative;min-height:48svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden">
+    <img src="./assets/room-surgery-2.png" alt="{{ t.trTitle }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,22,19,.55),rgba(26,22,19,.85))"></div>
+    <div style="position:relative;padding:0 20px 30px">
+      <span style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#F5B301">{{ t.trEyebrow }}</span>
+      <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:38px;line-height:1.03;color:#fff;margin:12px 0 0">{{ t.trTitle }}</h1>
+    </div>
+  </section>
+  <section style="padding:36px 20px 56px">
+    <div style="background:#1A1613;color:#fff;padding:26px 22px;margin-bottom:34px">
+      <div style="font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#F5B301">{{ t.trGlance }}</div>
+      <div style="font-family:'Instrument Serif',serif;font-size:40px;margin:14px 0 4px">170.000 Ft</div>
+      <div style="font-size:12.5px;opacity:.6">{{ t.trPriceNote }}</div>
+      <div style="display:grid;gap:16px;font-size:14px;line-height:1.5;border-top:1px solid rgba(255,255,255,.14);margin-top:22px;padding-top:22px">
+        <sc-for list="{{ trFacts }}" as="f" hint-placeholder-count="4"><div><span style="opacity:.55">{{ f.k }}</span><br>{{ f.v }}</div></sc-for>
+      </div>
+      <a href="#" onClick="{{ goBook }}" style="display:block;text-align:center;margin-top:24px;padding:16px;border-radius:999px;background:#F5B301;color:#1A1613;font-size:14.5px;font-weight:500">{{ t.cta }}</a>
+    </div>
+    <p style="font-size:18px;line-height:1.55;margin:0 0 22px">{{ t.trLead }}</p>
+    <p style="font-size:15.5px;line-height:1.75;opacity:.72;margin:0 0 34px">{{ t.trBody }}</p>
+    <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:28px;margin:0 0 18px">{{ t.trSteps }}</h2>
+    <div style="display:grid;gap:1px;background:rgba(26,22,19,.14)">
+      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+        <div style="background:#E9E0D1;padding:20px 0">
+          <span style="font-family:'Instrument Serif',serif;font-size:24px;color:#F5B301">{{ st.n }}</span>
+          <div style="font-size:17px;margin:6px 0 6px">{{ st.title }}</div>
+          <div style="font-size:14.5px;line-height:1.6;opacity:.68">{{ st.text }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isTeam }}">
+<main data-screen-label="Mobile / team" style="background:#E9E0D1;padding:88px 20px 56px;background-image:linear-gradient(180deg,rgba(26,22,19,.16) 0,rgba(26,22,19,0) 220px)">
+  <span style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#B98A00">{{ t.navTeam }}</span>
+  <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:38px;line-height:1.04;margin:12px 0 34px">{{ t.teamTitle }}</h1>
+  <sc-for list="{{ teamGroups }}" as="g" hint-placeholder-count="4">
+    <div style="margin-bottom:38px">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+        <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:24px;margin:0;white-space:nowrap">{{ g.title }}</h2>
+        <span style="flex:1;height:1px;background:rgba(26,22,19,.18)"></span>
+      </div>
+      <div style="display:grid;gap:12px">
+        <sc-for list="{{ g.people }}" as="d">
+          <div style="display:grid;grid-template-columns:112px minmax(0,1fr);background:#1A1613">
+            <div role="img" aria-label="{{ d.name }}" style="aspect-ratio:3/4;background-color:#1A1613;background-image:url({{ d.photo }});background-size:cover;background-repeat:no-repeat;background-position:50% 18%"></div>
+            <div style="display:flex;flex-direction:column;justify-content:center;padding:16px 16px">
+              <div style="font-family:'Instrument Serif',serif;font-size:20px;line-height:1.1;letter-spacing:.03em;text-transform:uppercase;color:#FBF8F2">{{ d.name }}</div>
+              <div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;line-height:1.55;color:rgba(251,248,242,.62);margin-top:8px">{{ d.role }}</div>
+              <div style="margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:4px">
+                <span style="font-size:8.5px;letter-spacing:.3em;text-transform:uppercase;color:rgba(251,248,242,.5)">Perfect Smile</span>
+                <span style="display:block;width:44px;height:8px;border-bottom:1.5px solid #B98A00;border-radius:0 0 50% 50% / 0 0 100% 100%"></span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-for>
+</main>
+</sc-if>
+
+<sc-if value="{{ isPrices }}">
+<main data-screen-label="Mobile / prices" style="background:#E9E0D1;padding:88px 20px 56px;background-image:linear-gradient(180deg,rgba(26,22,19,.16) 0,rgba(26,22,19,0) 220px)">
+  <span style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#B98A00">{{ t.navFees }}</span>
+  <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:38px;line-height:1.04;margin:12px 0 14px">{{ t.feesTitle }}</h1>
+  <p style="font-size:15.5px;line-height:1.65;opacity:.7;margin:0 0 30px">{{ t.feesText }}</p>
+  <sc-for list="{{ priceGroups }}" as="g" hint-placeholder-count="5">
+    <div style="border-top:1px solid rgba(26,22,19,.2)">
+      <a href="#" onClick="{{ g.toggle }}" style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:20px 0">
+        <span style="font-family:'Instrument Serif',serif;font-size:24px;line-height:1.15">{{ g.title }}</span>
+        <span style="font-size:20px;color:#B98A00;flex:none;width:24px;text-align:right">{{ g.sign }}</span>
+      </a>
+      <sc-if value="{{ g.open }}">
+        <div style="padding-bottom:14px">
+          <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid rgba(26,22,19,.08)">
+              <span style="font-size:15px">{{ r.name }}</span>
+              <span style="font-family:'Instrument Serif',serif;font-size:19px;white-space:nowrap">{{ r.price }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+  </sc-for>
+</main>
+</sc-if>
+
+<sc-if value="{{ isAbout }}">
+<main data-screen-label="Mobile / about" style="background:#E9E0D1;padding:88px 0 56px;background-image:linear-gradient(180deg,rgba(26,22,19,.16) 0,rgba(26,22,19,0) 220px)">
+  <section style="padding:0 20px 36px">
+    <span style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#B98A00">{{ t.navAbout }}</span>
+    <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:36px;line-height:1.06;margin:12px 0 20px">{{ t.aboutTitle }}</h1>
+    <img src="./assets/room-lounge.png" alt="{{ t.galleryTitle }}" style="width:100%;height:300px;object-fit:cover;display:block;margin-bottom:22px">
+    <p style="font-size:16px;line-height:1.7;opacity:.75;margin:0 0 18px">{{ t.aboutP1 }}</p>
+    <p style="font-size:15.5px;line-height:1.75;opacity:.68;margin:0 0 18px">{{ t.aboutP2 }}</p>
+    <p style="font-size:15.5px;line-height:1.75;opacity:.68;margin:0">{{ t.aboutP3 }}</p>
+  </section>
+  <section style="padding:0 0 40px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:0 20px 14px">
+      <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:26px;margin:0">{{ t.galleryTitle }}</h2>
+      <span style="font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;opacity:.5">{{ t.galleryHint }}</span>
+    </div>
+    <div data-noscroll="1" style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding:0 20px 8px">
+      <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="5">
+        <figure style="flex:0 0 auto;width:74vw;margin:0;scroll-snap-align:start">
+          <div role="img" aria-label="{{ g.cap }}" style="height:220px;background-color:#DCD1BE;background-image:url({{ g.src }});background-size:cover;background-position:50% 50%"></div>
+          <figcaption style="margin-top:10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.55">{{ g.cap }}</figcaption>
+        </figure>
+      </sc-for>
+    </div>
+  </section>
+  <section style="padding:0 20px 40px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(26,22,19,.14)">
+      <sc-for list="{{ aboutFacts }}" as="f" hint-placeholder-count="4">
+        <div style="background:#E9E0D1;padding:22px 18px">
+          <div style="font-family:'Instrument Serif',serif;font-size:32px;line-height:1">{{ f.n }}</div>
+          <div style="margin-top:10px;font-size:13px;line-height:1.55;opacity:.7">{{ f.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  <section style="padding:0 20px 40px">
+    <div style="border-top:1px solid rgba(26,22,19,.16);padding-top:28px">
+      <p style="font-family:'Instrument Serif',serif;font-weight:400;font-size:22px;line-height:1.4;margin:0 0 14px">„{{ t.aboutQuote }}”</p>
+      <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.55">{{ t.aboutQuoteWho }}</div>
+    </div>
+  </section>
+  <section style="padding:0 20px">
+    <div style="display:grid;gap:1px;background:rgba(26,22,19,.14)">
+      <sc-for list="{{ values }}" as="v" hint-placeholder-count="3">
+        <div style="background:#E9E0D1;padding:24px 18px">
+          <h3 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:23px;margin:0 0 10px">{{ v.title }}</h3>
+          <p style="font-size:14.5px;line-height:1.6;opacity:.7;margin:0">{{ v.text }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isBlog }}">
+<main data-screen-label="Mobile / blog" style="background:#E9E0D1;padding:88px 20px 56px;background-image:linear-gradient(180deg,rgba(26,22,19,.16) 0,rgba(26,22,19,0) 220px)">
+  <span style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#B98A00">{{ t.navJournal }}</span>
+  <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:38px;line-height:1.04;margin:12px 0 30px">{{ t.blogTitle }}</h1>
+  <div style="display:grid;gap:34px">
+    <sc-for list="{{ posts }}" as="p" hint-placeholder-count="9">
+      <a href="{{ p.url }}" target="_blank" rel="noopener" style="display:block">
+        <div style="aspect-ratio:3/2;background-color:#EFEAE0;background-image:url({{ p.cover }});background-size:cover;background-position:50% 50%"></div>
+        <div style="margin-top:14px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#B98A00">{{ p.cat }} · {{ p.date }}</div>
+        <h3 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:24px;line-height:1.18;margin:9px 0 8px">{{ p.title }}</h3>
+        <p style="font-size:14.5px;line-height:1.6;opacity:.68;margin:0">{{ p.excerpt }}</p>
+      </a>
+    </sc-for>
+  </div>
+  <div style="margin-top:52px">
+    <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:28px;margin:0 0 10px">{{ t.podcastTitle }}</h2>
+    <p style="font-size:15px;line-height:1.65;opacity:.68;margin:0 0 10px">{{ t.podcastText }}</p>
+    <a href="https://www.youtube.com/channel/UCVopQ7hfmFVhyRaEIzL3HCQ" target="_blank" rel="noopener" style="display:inline-block;font-size:13px;opacity:.7;margin-bottom:22px">YouTube →</a>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <sc-for list="{{ podcasts }}" as="ep" hint-placeholder-count="8">
+        <a href="{{ ep.url }}" target="_blank" rel="noopener" style="display:flex;flex-direction:column;background:{{ ep.bg }};border-radius:10px;padding:15px;color:#fff">
+          <div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.75;margin-bottom:8px">#balsaidoki</div>
+          <p style="font-family:'Instrument Serif',serif;font-size:17px;line-height:1.22;margin:0 0 14px;flex:1">{{ ep.title }}</p>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:10.5px;opacity:.7">Spotify</span>
+            <span style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:11px">▶</span>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isContact }}">
+<main data-screen-label="Mobile / contact" style="background:#E9E0D1;padding:88px 20px 56px;background-image:linear-gradient(180deg,rgba(26,22,19,.16) 0,rgba(26,22,19,0) 220px)">
+  <span style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#B98A00">{{ t.navContact }}</span>
+  <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:36px;line-height:1.05;margin:12px 0 28px">Fő utca 71., Budapest II.</h1>
+  <div style="display:grid;gap:14px;margin-bottom:26px">
+    <a href="tel:+3612124272" style="display:block;text-align:center;padding:17px;border-radius:999px;background:#F5B301;color:#1A1613;font-size:15px;font-weight:500">+36 1 212 4272</a>
+    <a href="https://maps.google.com/?q=F%C5%91+utca+71,+1027+Budapest" target="_blank" rel="noopener" style="display:block;text-align:center;padding:17px;border-radius:999px;border:1px solid rgba(26,22,19,.3);font-size:15px">Google Maps →</a>
+  </div>
+  <div style="height:300px;background:#DCD1BE;margin-bottom:14px">
+    <iframe src="https://maps.google.com/maps?layer=c&amp;cbll=47.5096684,19.0384315&amp;cbp=12,72.01,0,0,17.42&amp;output=svembed" style="width:100%;height:100%;border:0" loading="lazy" title="Perfect Smile — Street View"></iframe>
+  </div>
+  <div style="height:200px;background:#DCD1BE;margin-bottom:30px">
+    <iframe src="https://maps.google.com/maps?q=F%C5%91%20utca%2071%2C%201027%20Budapest&amp;output=embed" style="width:100%;height:100%;border:0" loading="lazy" title="Perfect Smile — Google Maps"></iframe>
+  </div>
+  <div style="display:grid;gap:26px">
+    <div>
+      <div style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#B98A00;margin-bottom:8px">{{ t.cAddress }}</div>
+      <div style="font-size:16.5px;line-height:1.65">1027 Budapest, Fő utca 71.<br>{{ t.cDistrict }}</div>
+    </div>
+    <div>
+      <div style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#B98A00;margin-bottom:8px">{{ t.cReception }}</div>
+      <div style="font-size:16.5px;line-height:1.7"><a href="tel:+3612124272">+36 1 212 4272</a><br><a href="tel:+36205156271">+36 20 515 6271</a></div>
+    </div>
+    <div>
+      <div style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#B98A00;margin-bottom:8px">{{ t.cHours }}</div>
+      <div style="font-size:15px;line-height:1.8;opacity:.75">{{ t.cHours1 }}<br>{{ t.cHours2 }}</div>
+    </div>
+    <div>
+      <div style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#B98A00;margin-bottom:8px">{{ t.cStation }}</div>
+      <div style="font-size:15px;line-height:1.7;opacity:.75">{{ t.cStationText }}</div>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isBook }}">
+<main data-screen-label="Mobile / booking" style="background:#1A1613;color:#fff;min-height:100svh;padding:88px 20px 56px">
+  <span style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#F5B301">{{ t.bookingEyebrow }}</span>
+  <h1 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:36px;line-height:1.06;margin:12px 0 16px">{{ t.cta }}</h1>
+  <p style="font-size:15px;line-height:1.65;color:rgba(255,255,255,.7);margin:0 0 30px">{{ t.bookText }}</p>
+  <div style="display:grid;gap:14px">
+    <input placeholder="{{ t.fFirst }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+    <input placeholder="{{ t.fLast }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+    <input placeholder="{{ t.fPhone }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+    <input placeholder="{{ t.fEmail }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+    <input placeholder="{{ t.fTreat }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+    <input placeholder="{{ t.fTime }}" style="background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;padding:14px 0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+    <button style="margin-top:12px;padding:18px;border:0;border-radius:999px;background:#F5B301;color:#1A1613;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif">{{ t.cta }}</button>
+    <div style="font-size:13px;color:rgba(255,255,255,.45)">{{ t.bookCall }} <a href="tel:+3612124272" style="color:#F5B301">+36 1 212 4272</a>.</div>
+  </div>
+</main>
+</sc-if>
+
+<footer style="background:#141110;color:rgba(255,255,255,.72);padding:44px 20px 32px">
+  <div style="display:flex;align-items:center;gap:10px;color:#fff;margin-bottom:16px">
+    <span style="display:block;width:28px;height:28px;border-radius:8px;background:linear-gradient(160deg,#FFD24A,#F0A800);position:relative;overflow:hidden">
+      <span style="position:absolute;left:14%;right:14%;top:36%;height:34%;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:3px solid #fff"></span>
+    </span>
+    <span style="font-family:'Instrument Serif',serif;font-size:20px">Perfect Smile</span>
+  </div>
+  <p style="font-size:13.5px;line-height:1.7;margin:0 0 26px">{{ t.footBlurb }}</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;font-size:13.5px">
+    <div style="display:grid;gap:9px;align-content:start">
+      <div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#F5B301">{{ t.footPractice }}</div>
+      <a href="#" onClick="{{ goAbout }}" style="color:rgba(255,255,255,.72)">{{ t.navAbout }}</a>
+      <a href="#" onClick="{{ goTeam }}" style="color:rgba(255,255,255,.72)">{{ t.navTeam }}</a>
+      <a href="#" onClick="{{ goPrices }}" style="color:rgba(255,255,255,.72)">{{ t.footFees }}</a>
+      <a href="#" onClick="{{ goBlog }}" style="color:rgba(255,255,255,.72)">{{ t.navJournal }}</a>
+    </div>
+    <div style="display:grid;gap:9px;align-content:start">
+      <div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#F5B301">{{ t.footVisit }}</div>
+      <span>1027 Budapest<br>Fő utca 71.</span>
+      <a href="tel:+3612124272" style="color:rgba(255,255,255,.72)">+36 1 212 4272</a>
+      <a href="#" onClick="{{ goContact }}" style="color:rgba(255,255,255,.72)">{{ t.navContact }}</a>
+    </div>
+  </div>
+  <div style="margin-top:32px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;flex-wrap:wrap;gap:10px 18px;font-size:11.5px;color:rgba(255,255,255,.4)">
+    <span>© 2026 Perfect Smile fogászat</span>
+    <a href="#" style="color:rgba(255,255,255,.4)">{{ t.footPrivacy }}</a>
+    <a href="#" style="color:rgba(255,255,255,.4)">{{ t.footGuarantee }}</a>
+  </div>
+</footer>
+
+<sc-if value="{{ chatOpen }}">
+<div style="position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;background:#fff">
+  <div style="background:#F5B301;color:#1A1613;padding:14px 18px;display:flex;align-items:center;gap:12px;flex:none">
+    <span style="flex:1;font-size:15px;font-weight:500">{{ t.chatTitle }}</span>
+    <a href="#" onClick="{{ toggleChat }}" style="color:#1A1613;font-size:24px;line-height:1;width:36px;text-align:right">×</a>
+  </div>
+  <div ref="{{ chatScrollRef }}" data-noscroll="1" style="padding:18px;display:flex;flex-direction:column;gap:10px;flex:1 1 auto;min-height:0;overflow-y:auto;scrollbar-width:none">
+    <sc-for list="{{ chatMsgs }}" as="m">
+      <div style="max-width:86%;align-self:{{ m.align }};background:{{ m.bg }};color:{{ m.fg }};border-radius:10px;padding:11px 14px;font-size:14px;line-height:1.5">{{ m.text }}</div>
+    </sc-for>
+  </div>
+  <div style="padding:0 18px 8px;display:flex;flex-direction:column;gap:8px;flex:none">
+    <sc-for list="{{ chatChips }}" as="c">
+      <a href="#" onClick="{{ c.pick }}" style="align-self:flex-start;font-size:12.5px;padding:9px 13px;border:1px solid #DDE4F5;background:#F7F9FE;border-radius:8px;line-height:1.35">{{ c.label }}</a>
+    </sc-for>
+  </div>
+  <div style="padding:10px 18px 18px;flex:none">
+    <div style="display:flex;align-items:center;gap:10px;background:#EFEFEF;border-radius:10px;padding:12px 14px">
+      <input value="{{ chatInput }}" onChange="{{ onChatInput }}" onKeyDown="{{ onChatKey }}" placeholder="{{ t.chatPlaceholder }}" style="flex:1;min-width:0;background:transparent;border:0;font-size:16px;font-family:'DM Sans',sans-serif;outline:none">
+      <a href="#" onClick="{{ sendChat }}" style="color:#F5B301;font-size:19px;line-height:1;flex:none">➤</a>
+    </div>
+    <div style="text-align:center;font-size:11px;color:rgba(26,22,19,.35);padding-top:10px">{{ t.chatPowered }}</div>
+  </div>
+</div>
+</sc-if>
+
+<a href="#" onClick="{{ toggleChat }}" style="position:fixed;right:16px;bottom:88px;z-index:80;width:52px;height:52px;border-radius:50%;background:#F5B301;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(26,22,19,.3);position:fixed">
+  <span style="position:absolute;left:26%;right:26%;top:40%;height:26%;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:3px solid #fff"></span>
+</a>
+
+<div style="position:fixed;left:0;right:0;bottom:0;z-index:75;display:grid;grid-template-columns:1fr 1.2fr;gap:10px;padding:12px 16px 14px;background:rgba(20,17,16,.96);backdrop-filter:blur(8px)">
+  <a href="tel:+3612124272" style="display:flex;align-items:center;justify-content:center;gap:8px;height:48px;border-radius:999px;border:1px solid rgba(255,255,255,.3);color:#fff;font-size:14px">☏ {{ t.cReception }}</a>
+  <a href="#" onClick="{{ goBook }}" style="display:flex;align-items:center;justify-content:center;height:48px;border-radius:999px;background:#F5B301;color:#1A1613;font-size:14px;font-weight:500">{{ t.bookingEyebrow }}</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:844}}">
+class Component extends DCLogic {
+  state = { page: "home", lang: "hu", menuOpen: false, chatOpen: false, chatInput: "", chat: [], scrolled: false, tourIdx: 0, openGroup: 0 };
+
+  tourRef = React.createRef();
+  chatScrollRef = React.createRef();
+
+  go(page) {
+    return (e) => {
+      if (e) e.preventDefault();
+      this.setState({ page, menuOpen: false }, () => window.scrollTo(0, 0));
+    };
+  }
+
+  componentDidMount() {
+    this._onScroll = () => {
+      const y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      const sc = y > 60;
+      if (sc !== this.state.scrolled) this.setState({ scrolled: sc });
+      this.startTourLoop();
+    };
+    window.addEventListener("scroll", this._onScroll, { passive: true });
+    window.addEventListener("resize", this._onScroll);
+    document.addEventListener("scroll", this._onScroll, { passive: true, capture: true });
+    this.startTourLoop();
+    this.updateTour();
+    if (!window.PS_DATA) {
+      this._poll = setInterval(() => {
+        if (window.PS_DATA) { clearInterval(this._poll); this._poll = null; this.forceUpdate(); }
+      }, 60);
+    }
+    this.hydrateTourImages();
+  }
+
+  startTourLoop() {
+    if (this._tourRaf) { this._tourIdle = 0; return; }
+    this._tourIdle = 0;
+    const loop = () => {
+      const el = this.tourRef.current;
+      if (!el) { this._tourRaf = null; return; }
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || 800;
+      if (rect.bottom > -vh && rect.top < vh * 2) { this.updateTour(); this._tourIdle = 0; } else { this._tourIdle++; }
+      if (this._tourIdle > 30) { this._tourRaf = null; return; }
+      this._tourRaf = requestAnimationFrame(loop);
+    };
+    this._tourRaf = requestAnimationFrame(loop);
+  }
+
+  updateTour() {
+    const el = this.tourRef.current;
+    if (!el) return;
+    const layers = el.querySelectorAll("[data-room]");
+    const caps = el.querySelectorAll("[data-caption]");
+    const dots = el.querySelectorAll("[data-dot]");
+    const n = layers.length;
+    if (!n) return;
+    const rect = el.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const span = Math.max(1, el.offsetHeight - vh);
+    const target = Math.max(0, Math.min(1, -rect.top / span));
+    if (this._tourP == null) this._tourP = target;
+    else this._tourP += (target - this._tourP) * 0.12;
+    if (Math.abs(target - this._tourP) < 0.0004) this._tourP = target;
+    const pos = this._tourP * (n - 1);
+    layers.forEach((l, i) => {
+      const dd = Math.abs(pos - i);
+      const w = Math.max(0, 1 - dd);
+      const e = w * w * (3 - 2 * w);
+      l.style.opacity = String(e);
+      l.style.transform = "scale(" + (1.06 - 0.06 * e) + ")";
+      const cap = caps[i];
+      if (cap) {
+        const cw = Math.max(0, 1 - dd * 1.6);
+        cap.style.opacity = String(cw);
+        cap.style.transform = "translateY(" + (1 - cw) * 22 + "px)";
+        cap.style.pointerEvents = cw > 0.5 ? "auto" : "none";
+      }
+      const dot = dots[i];
+      if (dot) {
+        const on = dd < 0.5;
+        dot.style.background = on ? "#F5B301" : "rgba(255,255,255,.3)";
+        dot.style.transform = on ? "scale(1.6)" : "scale(1)";
+      }
+    });
+  }
+
+  hydrateTourImages() {
+    const el = this.tourRef.current;
+    if (!el) return;
+    el.querySelectorAll("img[data-src]").forEach((img) => {
+      const s = img.getAttribute("data-src");
+      if (s && s.indexOf("{{") === -1 && img.getAttribute("src") !== s) img.setAttribute("src", s);
+    });
+  }
+
+  componentDidUpdate(_p, prev) {
+    this.hydrateTourImages();
+    if (prev && prev.page !== this.state.page) { this._tourP = null; this.startTourLoop(); this.updateTour(); }
+    if (prev && (prev.chat.length !== this.state.chat.length || prev.chatOpen !== this.state.chatOpen)) {
+      const el = this.chatScrollRef.current;
+      if (el) el.scrollTop = el.scrollHeight;
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._poll) clearInterval(this._poll);
+    if (this._tourRaf) { cancelAnimationFrame(this._tourRaf); this._tourRaf = null; }
+    window.removeEventListener("scroll", this._onScroll);
+    window.removeEventListener("resize", this._onScroll);
+    document.removeEventListener("scroll", this._onScroll, true);
+  }
+
+  chatReply(question, hu) {
+    const q = (question || "").toLowerCase();
+    const has = (...w) => w.some((x) => q.includes(x));
+    if (has("ár", "mennyi", "ft", "price", "cost", "fee")) {
+      return hu
+        ? "Áraink tájékoztató jellegűek: fogkőeltávolítás 25.000 Ft, esztétikus tömés 30.000 Ft, cirkon korona 120.000 Ft, SGS implantátum 170.000 Ft. A konzultáció után tételes tervet készítünk."
+        : "Our guide prices: scaling 25.000 Ft, aesthetic filling 30.000 Ft, zirconia crown 120.000 Ft, SGS implant 170.000 Ft. After the consultation you receive an itemised plan.";
+    }
+    if (has("implant", "implantát")) {
+      return hu
+        ? "Az SGS-Dental implantátum 170.000 Ft-tól, az All-on-4 220.000 Ft-tól. A beültetés teljes érzéstelenítésben, igény esetén altatásban történik, egyszerű esetben fél óra alatt."
+        : "An SGS-Dental implant starts at 170.000 Ft, All-on-4 at 220.000 Ft. Placement is under full local anaesthetic, or sedation on request — half an hour in simple cases.";
+    }
+    if (has("érzéstelenít", "anaesthetic", "anesthetic", "fájdalom")) {
+      return hu
+        ? "Kezeléseinket teljes helyi érzéstelenítésben végezzük, fájdalommentesen. Félős pácienseknek altatás is elérhető, aneszteziológus jelenlétében (200.000 Ft)."
+        : "Treatments are carried out painlessly under full local anaesthetic. For anxious patients sedation is also available with an anaesthetist present (200.000 Ft).";
+    }
+    if (has("sürgős", "emergency", "urgent", "fájdal")) {
+      return hu
+        ? "Sürgős esetben hívjon minket rendelési időben: +36 1 212 4272 vagy +36 20 515 6271. Fájdalom, törés vagy dagadás esetén igyekszünk aznap fogadni."
+        : "In an emergency call us during opening hours: +36 1 212 4272 or +36 20 515 6271. For pain, a broken tooth or swelling we try to see you the same day.";
+    }
+    if (has("altat", "sedation", "narkó")) {
+      return hu
+        ? "Altatásos kezelést elsősorban műtétekhez és szájsebészeti beavatkozásokhoz javasolunk, aneszteziológus jelenlétében. Díja 200.000 Ft."
+        : "We recommend sedation primarily for surgery and oral surgical procedures, with an anaesthetist present. The fee is 200.000 Ft.";
+    }
+    if (has("nyitva", "óra", "hour", "open", "mikor")) {
+      return hu
+        ? "Hétfőtől péntekig 8:00–12:00 és 13:00–17:00 között fogadjuk pácienseinket, előre egyeztetett időpontban. Szombaton és vasárnap zárva vagyunk."
+        : "We see patients Monday to Friday, 8:00–12:00 and 13:00–17:00, strictly by appointment. We are closed at weekends.";
+    }
+    if (has("hol", "cím", "where", "address", "parkol", "metró")) {
+      return hu
+        ? "A rendelő címe 1027 Budapest, Fő utca 71. (II. kerület), a Batthyány tértől 6 perc gyalog."
+        : "The practice is at Fő utca 71, 1027 Budapest (II. district), six minutes on foot from Batthyány tér.";
+    }
+    if (has("időpont", "foglal", "book", "appointment", "konzult")) {
+      return hu
+        ? "Időpontot telefonon egyeztetünk: +36 1 212 4272 vagy +36 20 515 6271. Hagyhat számot a visszahívás űrlapon is, és egy órán belül keresjük."
+        : "Appointments are arranged by phone: +36 1 212 4272 or +36 20 515 6271. You can also leave your number in the callback form and we will call you within the hour.";
+    }
+    return hu
+      ? "Köszönjük a kérdést! Kollégánk hamarosan válaszol. Ha sürgős, hívjon minket: +36 1 212 4272."
+      : "Thank you for your question — a colleague will reply shortly. If it's urgent, please call us on +36 1 212 4272.";
+  }
+
+  pushChat(text) {
+    const hu = this.state.lang !== "en";
+    if (!text || !text.trim()) return;
+    this.setState({ chat: this.state.chat.concat({ who: "me", text: text.trim() }), chatInput: "" }, () => {
+      setTimeout(() => this.setState({ chat: this.state.chat.concat({ who: "bot", text: this.chatReply(text, hu) }) }), 480);
+    });
+  }
+
+  renderVals() {
+    const p = this.state.page;
+    const hu = this.state.lang !== "en";
+    const L = hu ? "hu" : "en";
+    const PS = window.PS_DATA || { T: { hu: {}, en: {} }, D: { hu: {}, en: {} } };
+    const t = PS.T[L] || {};
+    const d = PS.D[L] || {};
+    const empty = [];
+    return {
+      t,
+      langLabel: hu ? "EN" : "HU",
+      toggleLang: (e) => { if (e) e.preventDefault(); this.setState({ lang: hu ? "en" : "hu" }); },
+      isHome: p === "home", isServices: p === "services", isTreatment: p === "treatment",
+      isTeam: p === "team", isPrices: p === "prices", isAbout: p === "about",
+      isBlog: p === "blog", isContact: p === "contact", isBook: p === "book",
+      goHome: this.go("home"), goServices: this.go("services"), goTreatment: this.go("treatment"),
+      goTeam: this.go("team"), goPrices: this.go("prices"), goAbout: this.go("about"),
+      goBlog: this.go("blog"), goContact: this.go("contact"), goBook: this.go("book"),
+      menuOpen: this.state.menuOpen,
+      openMenu: (e) => { if (e) e.preventDefault(); this.setState({ menuOpen: true }); },
+      closeMenu: (e) => { if (e) e.preventDefault(); this.setState({ menuOpen: false }); },
+      headerBg: (p === "home" && !this.state.scrolled)
+        ? "linear-gradient(to bottom, rgba(26,22,19,.8), rgba(26,22,19,0))"
+        : "rgba(20,17,16,.95)",
+      tourRef: this.tourRef,
+      onTourScroll: (e) => {
+        const el = e.currentTarget;
+        const i = Math.round(el.scrollLeft / Math.max(1, el.clientWidth));
+        if (i !== this.state.tourIdx) this.setState({ tourIdx: i });
+      },
+      rooms: d.rooms || empty,
+      tourDots: (d.rooms || empty).map((_, i) => ({ bg: i === this.state.tourIdx ? "#F5B301" : "rgba(255,255,255,.3)" })),
+      allServices: (d.services || empty).concat(d.extra || empty),
+      teamGroups: d.teamGroups || empty,
+      gallery: d.gallery || empty,
+      aboutFacts: d.aboutFacts || empty,
+      trFacts: d.trFacts || empty,
+      steps: d.steps || empty,
+      priceGroups: (d.priceGroups || empty).map((g, i) => ({
+        title: g.title,
+        rows: g.rows,
+        open: this.state.openGroup === i,
+        sign: this.state.openGroup === i ? "−" : "+",
+        toggle: (e) => { if (e) e.preventDefault(); this.setState({ openGroup: this.state.openGroup === i ? -1 : i }); }
+      })),
+      reviews: d.reviews || empty,
+      values: d.values || empty,
+      posts: d.posts || empty,
+      podcasts: d.podcasts || empty,
+      chatScrollRef: this.chatScrollRef,
+      chatOpen: this.state.chatOpen,
+      chatInput: this.state.chatInput,
+      toggleChat: (e) => { if (e) e.preventDefault(); this.setState({ chatOpen: !this.state.chatOpen }); },
+      onChatInput: (e) => this.setState({ chatInput: e.target.value }),
+      onChatKey: (e) => { if (e.key === "Enter") { e.preventDefault(); this.pushChat(this.state.chatInput); } },
+      sendChat: (e) => { if (e) e.preventDefault(); this.pushChat(this.state.chatInput); },
+      chatChips: (hu
+        ? ["Milyen érzéstelenítési lehetőségek vannak?", "Mit tegyek sürgős fogászati esetben?"]
+        : ["What anaesthetic options do you offer?", "What should I do in case of a dental emergency?"]
+      ).map((label) => ({ label, pick: (e) => { if (e) e.preventDefault(); this.pushChat(label); } })),
+      chatMsgs: [{ who: "bot", text: t.chatGreeting || "" }].concat(this.state.chat).map((m) => ({
+        text: m.text,
+        align: m.who === "me" ? "flex-end" : "flex-start",
+        bg: m.who === "me" ? "#1A1613" : "#EFE7D8",
+        fg: m.who === "me" ? "#FBF8F2" : "#1A1613"
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

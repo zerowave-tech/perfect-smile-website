@@ -1,0 +1,7 @@
+{
+  // The *.dc.html files use {{ expr }} template placeholders inside inline
+  // style attributes (e.g. background:{{ headerBg }}, url({{ d.photo }})).
+  // VS Code's embedded-CSS validator can't parse them and reports false
+  // "identifier expected" / "} expected" / "Do not use empty rulesets" errors.
+  "html.validate.styles": false
+}
