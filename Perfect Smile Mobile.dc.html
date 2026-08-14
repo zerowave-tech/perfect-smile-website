@@ -490,6 +490,7 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
+    this._prev = { page: this.state.page, chatLen: this.state.chat.length, chatOpen: this.state.chatOpen };
     this._onScroll = () => {
       const y = window.pageYOffset || document.documentElement.scrollTop || 0;
       const sc = y > 60;
@@ -571,10 +572,18 @@ class Component extends DCLogic {
     });
   }
 
-  componentDidUpdate(_p, prev) {
+  // The runtime calls componentDidUpdate(prevProps) — there is no prevState
+  // second argument, so the previous values are tracked on the instance.
+  // Reading them off a `prev` parameter left both branches below permanently
+  // dead: the tour never restarted after navigation, and the chat never
+  // scrolled to the newest message.
+  componentDidUpdate() {
     this.hydrateTourImages();
-    if (prev && prev.page !== this.state.page) { this._tourP = null; this.startTourLoop(); this.updateTour(); }
-    if (prev && (prev.chat.length !== this.state.chat.length || prev.chatOpen !== this.state.chatOpen)) {
+    const prev = this._prev || { page: this.state.page, chatLen: this.state.chat.length, chatOpen: this.state.chatOpen };
+    const s = this.state;
+    this._prev = { page: s.page, chatLen: s.chat.length, chatOpen: s.chatOpen };
+    if (prev.page !== s.page) { this._tourP = null; this.startTourLoop(); this.updateTour(); }
+    if (prev.chatLen !== s.chat.length || prev.chatOpen !== s.chatOpen) {
       const el = this.chatScrollRef.current;
       if (el) el.scrollTop = el.scrollHeight;
     }
