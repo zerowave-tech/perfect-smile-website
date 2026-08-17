@@ -3,6 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Возвращает широкие экраны на десктопную версию (/).
+   ВАЖНО: должен стоять ПОСЛЕ meta viewport — иначе на телефоне замер
+   пойдёт по layout-viewport (980px) и страницу выкинет на десктоп.
+   Петли нет: здесь условие >= 768, в десктопном файле — < 768. */
+(function () {
+  try {
+    if (location.protocol === 'file:') return;            // локальное открытие с диска
+    if (/[?&]mobile=1/.test(location.search)) return;     // ручной опт-аут
+    var mq = window.matchMedia && window.matchMedia('(min-width: 768px)');
+    if (!(mq ? mq.matches : window.innerWidth >= 768)) return;
+    location.replace('/' + location.search + location.hash);
+  } catch (e) {}
+})();
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
