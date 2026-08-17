@@ -3,6 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Уводит узкие экраны на мобильную версию (/mobile).
+   ВАЖНО: должен стоять ПОСЛЕ meta viewport — иначе на телефоне замер
+   пойдёт по layout-viewport (980px) и переключение не сработает.
+   Петли нет: здесь условие < 768, в мобильном файле — >= 768. */
+(function () {
+  try {
+    if (location.protocol === 'file:') return;             // локальное открытие с диска
+    if (/[?&]desktop=1/.test(location.search)) return;     // ручной опт-аут
+    var mq = window.matchMedia && window.matchMedia('(max-width: 767px)');
+    if (!(mq ? mq.matches : window.innerWidth < 768)) return;
+    location.replace('/mobile' + location.search + location.hash);
+  } catch (e) {}
+})();
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
